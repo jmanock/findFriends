@@ -4,6 +4,7 @@ $(function(){
       var parameters = {
         search: $(this).val()
       }
+      console.log(parameters.search);
       $.get('/searching', parameters, function(data){
         $('#results').html(data);
       });

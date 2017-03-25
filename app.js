@@ -1,47 +1,40 @@
 var express = require('express');
+var routes = require('./routes');
+var http = require('http');
+var path = require('path');
+
 var app = express();
-var request = require('request');
-var cheerio = require('cheerio');
-var url = 'http://www.flvoters.com/by_zip.html';
 
-app.set('view engine', 'ejs');
+app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req, res){
-  request(url, function(error, response, body){
-    if(!error && response.statusCode === 200){
-      var $ = cheerio.load(body);
-      $('a').each(function(i, data){
-         var address = $(this).text();
-         something(address);
-      });
-    }
-  });
-  function something(address){
-    if(address === 'HOME PAGE'){
+if('development' === app.get('env')){
+  app.use(express.errorHandler());
+}
 
-    }else{
-      var x = [];
-      x.push(address);
-      res.render('pages/index', {
-        address:x
-      });
-    }
-  }
-  // var drinks = [
-  //   {name:'Blood Mary', drunkness:3},
-  //   {name:'Martini', drunkness:5},
-  //   {name:'Scotch', drunkness:10}
-  // ];
-  // var tagline = 'Any code of your own that you have not looked at for six or more months might as well have been written by someone else';
-
-  // res.render('pages/index',{
-  //   tagline:address
-  // });
+app.get('/', function(req,res){
+  res.render('index');
 });
 
-app.get('/about', function(req, res){
-  res.render('pages/about');
+app.get('/searching', function(req,res){
+  // res.send('Whee');
+  var val = req.query.search;
+   if(val.indexOf(' ')>=0){
+     console.log('has a space');
+   }
+
+  var url = 'http://www.imdb.com/find?ref_=nv_sr_fn&q='+val+'&s=all';
+  console.log(url);
 });
 
-app.listen(3000);
-console.log('3k is where to look');
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on 3k '+app.get('port'));
+});

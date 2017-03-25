@@ -1,13 +1,12 @@
 {
-  "name":"FindMyFriends",
-  "version":"0.0.2",
-  "private":true,
+  "name":"FindFriends",
+  "version":"0.0.1",
   "scripts":{
     "start":"node app.js"
   },
   "dependencies":{
     "express":"3.4.0",
-    "jade":"*",
-    "request":"~2.27.0"
+    "jade":"latest",
+    "request":"latest"
   }
 }
