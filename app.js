@@ -27,9 +27,10 @@ app.get('/', function(req,res){
 app.get('/searching', function(req,res){
   // res.send('Whee');
   var val = req.query.search;
-   if(val.indexOf(' ')>=0){
-     console.log('has a space');
-   }
+  if(val.indexOf(' ')>= 0){
+    val = val.split(' ').join('+');
+  }
+   console.log(val);
 
   var url = 'http://www.imdb.com/find?ref_=nv_sr_fn&q='+val+'&s=all';
   console.log(url);
