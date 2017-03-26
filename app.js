@@ -23,15 +23,22 @@ if('development' === app.get('env')){
 }
 
 app.get('/', function(req,res){
+  var url = 'http://ww.flvoters.com/by_zip.html';
+  console.log(url);
+  request(url, function(err, resp, body){
+    if(!err && resp.statusCode === 200){
+      console.log('HellzYeah');
+    }
+  })
   res.render('index');
 });
 
 app.get('/searching', function(req,res){
   var val = req.query.search;
-  // This is for a word search with no spaces
-  // if(val.indexOf(' ')>= 0){
-  //   val = val.split(' ').join('+');
-  // }
+  /*
+    ~ Should show up list of zip codes when typing in
+    ~ Send the value back here to get the next page
+  */
   if(val.length !== 5){
     console.log('Needs to be a valid zip code');
   }else{
@@ -39,7 +46,6 @@ app.get('/searching', function(req,res){
     request(url, function(err, resp, body){
       if(!err && resp.statusCode === 200){
         var $ = cheerio.body;
-        console.log(body);
       }
     });
   }

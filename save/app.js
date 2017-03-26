@@ -12,7 +12,8 @@ app.get('/', function(req, res){
       var $ = cheerio.load(body);
       $('a').each(function(i, data){
          var address = $(this).text();
-         something(address);
+          something(address);
+
       });
     }
   });

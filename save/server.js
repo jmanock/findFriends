@@ -18,6 +18,6 @@ function First(address){
   if(address === 'HOME PAGE'){
 
   }else{
-    console.log(address);
+    console.log('{zip:'+address+'},');
   }
 }
