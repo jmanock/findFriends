@@ -2,6 +2,8 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+var request = require('request');
+var cheerio = require('cheerio');
 
 var app = express();
 
@@ -25,15 +27,33 @@ app.get('/', function(req,res){
 });
 
 app.get('/searching', function(req,res){
-  // res.send('Whee');
   var val = req.query.search;
-  if(val.indexOf(' ')>= 0){
-    val = val.split(' ').join('+');
+  // This is for a word search with no spaces
+  // if(val.indexOf(' ')>= 0){
+  //   val = val.split(' ').join('+');
+  // }
+  if(val.length !== 5){
+    console.log('Needs to be a valid zip code');
+  }else{
+    var url = 'http://www.flvoters.com/by_address/'+val+'.html';
+    request(url, function(err, resp, body){
+      if(!err && resp.statusCode === 200){
+        var $ = cheerio.body;
+        console.log(body);
+      }
+    });
   }
-   console.log(val);
 
-  var url = 'http://www.imdb.com/find?ref_=nv_sr_fn&q='+val+'&s=all';
-  console.log(url);
+  // request(url, function(err, resp, body){
+  //   body = JSON.parse(body);
+  //   if(!body.query.results.RDF.item){
+  //     craig = 'No results found. Try again!';
+  //   }else{
+  //     craig = body.query.results.RDF.item[0]['about'];
+  //   }
+  //   console.log(craig);
+  // });
+
 });
 
 http.createServer(app).listen(app.get('port'), function(){

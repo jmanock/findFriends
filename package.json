@@ -1,12 +1,13 @@
 {
-  "name":"FindFriends",
-  "version":"0.0.1",
-  "scripts":{
-    "start":"node app.js"
+  "name": "FindFriends",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node app.js"
   },
-  "dependencies":{
-    "express":"3.4.0",
-    "jade":"latest",
-    "request":"latest"
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "express": "3.4.0",
+    "jade": "latest",
+    "request": "latest"
   }
 }
