@@ -16,11 +16,14 @@ $(function(){
   });
   $('#search').on('keyup', function(e){
     if(e.keyCode === 13){
-      var searchNum = $(this).value();
+      var searchNum = $(this).val();
+      var something = parseInt(searchNum);
+
       for(var i = 0; i<ZipCode.length; i++){
         var zips = ZipCode[i].zip;
-        if(searchNum === zips){
-          console.log('winner winner chicken dinner');
+
+        if(something === zips){
+          console.log('we got a match');
         }
       }
     }
