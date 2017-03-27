@@ -16,10 +16,13 @@ $(function(){
     ~ Get the fucking css to work
   */
   $('#results').append('<ul id="zipSearch">');
+
   $(ZipCode).each(function(i,j){
     $('#zipSearch').append('<li><a href='+j.zip+'>'+j.zip+'</li>');
   });
+
   $('li').append('</ul>');
+
   $('#search').on('keyup', function(){
     var searchNum = parseInt($(this).val());
     var zipNum = $('li').text();
@@ -28,6 +31,17 @@ $(function(){
         return $(this).text().indexOf($('#search').val()) != -1;
       }).show();
     }
+  });
+  // This should look for the li click
+  $('li a').on('click', function(e){
+    e.preventDefault();
+    var parameters = {
+      search:$(this).text()
+    }
+    console.log(parameters.search);
+    $.get('/searching', parameters, function(data){
+
+    });
   });
 
 });

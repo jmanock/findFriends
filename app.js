@@ -23,43 +23,17 @@ if('development' === app.get('env')){
 }
 
 app.get('/', function(req,res){
-  var url = 'http://ww.flvoters.com/by_zip.html';
-  console.log(url);
-  request(url, function(err, resp, body){
-    if(!err && resp.statusCode === 200){
-      var $ = cheerio.body;
-    }
-  })
   res.render('index');
 });
 
 app.get('/searching', function(req,res){
-  var val = req.query.search;
   /*
     ~ Should show up list of zip codes when typing in
     ~ Send the value back here to get the next page
   */
-  if(val.length !== 5){
-    console.log('Needs to be a valid zip code');
-  }else{
-    var url = 'http://www.flvoters.com/by_address/'+val+'.html';
-    request(url, function(err, resp, body){
-      if(!err && resp.statusCode === 200){
-        var $ = cheerio.body;
-      }
-    });
-  }
-
-  // request(url, function(err, resp, body){
-  //   body = JSON.parse(body);
-  //   if(!body.query.results.RDF.item){
-  //     craig = 'No results found. Try again!';
-  //   }else{
-  //     craig = body.query.results.RDF.item[0]['about'];
-  //   }
-  //   console.log(craig);
-  // });
-
+  var val = req.query.search;
+  var url = 'http://flvoters.com/by_address/'+val+'.html';
+  console.log(url);
 });
 
 http.createServer(app).listen(app.get('port'), function(){
