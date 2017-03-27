@@ -15,19 +15,32 @@ $(function(){
     $('#results').append('<li>'+j.zip+'</li>');
   });
   $('#search').on('keyup', function(e){
-    if(e.keyCode === 13){
-      var searchNum = $(this).val();
-      var something = parseInt(searchNum);
-
-      for(var i = 0; i<ZipCode.length; i++){
-        var zips = ZipCode[i].zip;
-
-        if(something === zips){
-          console.log('we got a match');
-        }
-      }
+    var searchNum = parseInt($(this).val());
+    var zipNum = $('li').text();
+    if(this.value.length > 0){
+      $('li').hide().filter(function(){
+        return $(this).indexOf($('li').val()) != -1;
+      }).show();
+    }else{
+      $('li').hide();
     }
   });
+  // $('#search').on('keyup', function(e){
+  //   if(e.keyCode === 13){
+  //     var searchNum = $(this).val();
+  //     var something = parseInt(searchNum);
+  //
+  //     for(var i = 0; i<ZipCode.length; i++){
+  //       var zips = ZipCode[i].zip;
+  //       if(something === zips){
+  //         // This needs to remove all li that dont match
+  //         // Maybe when typing it will remove them
+  //         // Then this needs to send the zip back to node
+  //         console.log('we got a match');
+  //       }
+  //     }
+  //   }
+  // });
 });
 
 var ZipCode = [
