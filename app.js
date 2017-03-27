@@ -28,9 +28,17 @@ app.get('/', function(req,res){
 
 app.get('/searching', function(req,res){
   /*
-    ~ Look up address
-    ~ Return list of another links
-    ~ Need to show new page after click
+    ~ Look up ZipCode
+    ~ Return List of Address
+    PART 3
+    ~ Click Address
+    ~ Return list of People
+    PART 4
+    ~ Able to click on people for google search
+    ~ Maybe show a map
+    ~ Highlight sex offenders
+    STRECH
+    ~ Look up crimanil record
   */
   var val = req.query.search;
   var url = 'http://flvoters.com/by_address/'+val+'.html';
