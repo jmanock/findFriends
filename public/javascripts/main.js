@@ -10,19 +10,20 @@ $(function(){
   //     });
   //   };
   // });
-
+  $('#results').append('<ul id="dino-search">');
   $(ZipCode).each(function(i,j){
-    $('#results').append('<li>'+j.zip+'</li>');
+    $('#dino-search').append('<li>'+j.zip+'</li>');
   });
-  $('#search').on('keyup', function(e){
+  $('li').append('</ul>');
+  $('#search').on('keyup', function(){
     var searchNum = parseInt($(this).val());
     var zipNum = $('li').text();
     if(this.value.length > 0){
-      $('li').hide().filter(function(){
-        return $(this).indexOf($('li').val()) != -1;
+      $('#dino-search li').hide().filter(function(){
+        return $(this).text().indexOf($('#search').val()) != -1;
       }).show();
     }else{
-      $('li').hide();
+      $('#dino-search li').hide();
     }
   });
   // $('#search').on('keyup', function(e){
