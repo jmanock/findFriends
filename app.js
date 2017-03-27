@@ -28,8 +28,9 @@ app.get('/', function(req,res){
 
 app.get('/searching', function(req,res){
   /*
-    ~ Should show up list of zip codes when typing in
-    ~ Send the value back here to get the next page
+    ~ Look up address
+    ~ Return list of another links
+    ~ Need to show new page after click
   */
   var val = req.query.search;
   var url = 'http://flvoters.com/by_address/'+val+'.html';

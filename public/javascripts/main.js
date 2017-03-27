@@ -23,6 +23,7 @@ $(function(){
 
   $('li').append('</ul>');
 
+  $('li').hide();
   $('#search').on('keyup', function(){
     var searchNum = parseInt($(this).val());
     var zipNum = $('li').text();
@@ -30,6 +31,8 @@ $(function(){
       $('#zipSearch li').hide().filter(function(){
         return $(this).text().indexOf($('#search').val()) != -1;
       }).show();
+    }else{
+      $('li').hide();
     }
   });
   // This should look for the li click
