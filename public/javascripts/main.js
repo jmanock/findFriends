@@ -10,38 +10,26 @@ $(function(){
   //     });
   //   };
   // });
-  $('#results').append('<ul id="dino-search">');
+  /*
+    ~ Need to send the results back to node to do another search
+    ~ Clicking the link should take you to another list
+    ~ Get the fucking css to work
+  */
+  $('#results').append('<ul id="zipSearch">');
   $(ZipCode).each(function(i,j){
-    $('#dino-search').append('<li>'+j.zip+'</li>');
+    $('#zipSearch').append('<li><a href='+j.zip+'>'+j.zip+'</li>');
   });
   $('li').append('</ul>');
   $('#search').on('keyup', function(){
     var searchNum = parseInt($(this).val());
     var zipNum = $('li').text();
     if(this.value.length > 0){
-      $('#dino-search li').hide().filter(function(){
+      $('#zipSearch li').hide().filter(function(){
         return $(this).text().indexOf($('#search').val()) != -1;
       }).show();
-    }else{
-      $('#dino-search li').hide();
     }
   });
-  // $('#search').on('keyup', function(e){
-  //   if(e.keyCode === 13){
-  //     var searchNum = $(this).val();
-  //     var something = parseInt(searchNum);
-  //
-  //     for(var i = 0; i<ZipCode.length; i++){
-  //       var zips = ZipCode[i].zip;
-  //       if(something === zips){
-  //         // This needs to remove all li that dont match
-  //         // Maybe when typing it will remove them
-  //         // Then this needs to send the zip back to node
-  //         console.log('we got a match');
-  //       }
-  //     }
-  //   }
-  // });
+
 });
 
 var ZipCode = [
