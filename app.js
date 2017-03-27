@@ -27,7 +27,7 @@ app.get('/', function(req,res){
   console.log(url);
   request(url, function(err, resp, body){
     if(!err && resp.statusCode === 200){
-      console.log('HellzYeah');
+      var $ = cheerio.body;
     }
   })
   res.render('index');
