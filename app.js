@@ -49,15 +49,25 @@ app.get('/searching', function(req,res){
       var $ = cheerio.load(body);
       $('big b').each(function(i,data){
         var addressList = $(this).text();
-        var something = addressList.includes('APT'||'UNIT');
-        // var somethingElse = addressList.includes('UNIT');
-        if(something === true){
-          // This works but need to get rid of the number at the end
-          var split = addressList.split('APT' || 'UNIT')[0];
-          console.log(split);
+        var doesIncludeApt = addressList.includes('APT');
+        var doesIncludeUnit = addressList.includes('UNIT');
+        if(doesIncludeUnit === true || doesIncludeApt === true){
+          if(doesIncludeUnit === true){
+            newAddressList = addressList.split('UNIT')[0];
+          }else{
+            newAddressList = addressList.split('APT')[0];
+          }
+          console.log(newAddressList);
         }
+        // if(doesIncludeUnit === true){
+        //   newAddressList = addressList.split('UNIT')[0];
+        //   console.log(newAddressList);
+        // }
+        // if(doesIncludeApt === true){
+        //   newAddressList = addressList.split('APT')[0];
+        //   console.log(newAddressList);
+        // }
         /*
-          ~ Need to get rid of apt/unit #
           ~ Return to user somehow
           ~ Maybe push to array or save list then delete it
         */
