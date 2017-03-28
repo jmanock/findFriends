@@ -53,27 +53,32 @@ app.get('/searching', function(req,res){
         var doesIncludeUnit = addressList.includes('UNIT');
         if(doesIncludeUnit === true || doesIncludeApt === true){
           if(doesIncludeUnit === true){
-            newAddressList = addressList.split('UNIT')[0];
+            newAddressList = addressList.split('UNIT')[0].trim();
           }else{
-            newAddressList = addressList.split('APT')[0];
+            newAddressList = addressList.split('APT')[0].trim();
           }
-          console.log(newAddressList);
+          address.push(newAddressList);
+        }else{
+          address.push(addressList);
         }
-        // if(doesIncludeUnit === true){
-        //   newAddressList = addressList.split('UNIT')[0];
-        //   console.log(newAddressList);
-        // }
-        // if(doesIncludeApt === true){
-        //   newAddressList = addressList.split('APT')[0];
-        //   console.log(newAddressList);
-        // }
         /*
+          ~ Get rid of white space before function
           ~ Return to user somehow
           ~ Maybe push to array or save list then delete it
         */
       });
+      //console.log('AddressLength: ', address.length);
+      something(address);
     }
   });
+  function something(address){
+    var something =[];
+    var unique = address.filter(function(elem, index, self){
+      return index == self.indexOf(elem);
+    });
+    //console.log('ShouldBeSmaller: ',unique.length);
+    console.log(unique);
+  }
 });
 
 http.createServer(app).listen(app.get('port'), function(){
