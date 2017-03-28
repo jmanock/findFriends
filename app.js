@@ -48,41 +48,40 @@ app.get('/searching', function(req,res){
     if(!err && response.statusCode === 200){
       var $ = cheerio.load(body);
       $('big b').each(function(i,data){
-        // var addressList = $(this).text();
-        // var matches = addressList.replace(/[0-9]/g,'');
-        // var doesIncludeApt = matches.includes('APT');
-        // var doesIncludeUnit = matches.includes('UNIT');
-        // if(doesIncludeUnit === true || doesIncludeApt === true){
-        //   if(doesIncludeUnit === true){
-        //     newAddressList = matches.split('UNIT')[0].trim();
-        //   }else{
-        //     newAddressList = matches.split('APT')[0].trim();
-        //   }
-        //   address.push(newAddressList);
-        // }else{
-        //   address.push(addressList);
-        // }
         var addressList = $(this).text();
-        var matches = addressList.replace(/[0-9]/g, ' ').trim();
-        var doesIncludeApt = matches.includes('APT');
-        var doesIncludeUnit = matches.includes('UNIT');
-        if(doesIncludeApt === true || doesIncludeUnit === true){
-          if(doesIncludeUnit === true){
-            newAddressList = matches.split('UNIT')[0].trim();
+        var matches = addressList.replace(/[^A-Za-z]+/g, ' ').trim();
+        // Maybe there is a better way to do this
+        // Maybe look for end of street name
+        var incApt = matches.includes(' APT');
+        var incUnit = matches.includes(' UNIT');
+        var incSte = matches.includes(' STE');
+        var incRm = matches.includes(' RM');
+        var incPh = matches.includes(' PH');
+        var incBld = matches.includes(' BLDG');
+        var incBox = matches.includes(' BOX');
+
+        if(incApt === true || incRm === true || incUnit === true || incSte === true || incPh === true || incBld === true || incBox === true){
+          if(incApt === true){
+            newAddress = matches.split('APT')[0];
+          }else if(incRm === true){
+            newAddress = matches.split('RM')[0];
+          }else if(incUnit === true){
+            newAddress = matches.split('UNIT')[0];
+          }else if(incSte === true){
+            newAddress = matches.split('STE')[0];
+          }else if(incPh === true){
+            newAddress = matches.split('PH')[0];
+          }else if(incBld === true){
+            newAddress = matches.split('BLDG')[0];
           }else{
-            newAddressList = matches.split('APT')[0].trim();
+            newAddress = matches.split('BOX')[0];
           }
-          address.push(newAddressList);
+          address.push(newAddress.trim())
         }else{
           address.push(matches);
         }
-        /*
-          ~ Need to shorten the list
-            ~ How about get rid of the numbers and return street names
-          ~ Return to user somehow
-        */
       });
-       console.log('AddressLength: ', address.length);
+      console.log('AddressLength: ', address.length);
       dups(address);
     }
   });
