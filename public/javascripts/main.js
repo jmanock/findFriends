@@ -1,24 +1,8 @@
 $(function(){
-  // $('#search').on('keyup', function(e){
-  //   if(e.keyCode === 13){
-  //     var parameters = {
-  //       search: $(this).val()
-  //     }
-  //     //console.log(parameters.search);
-  //     $.get('/searching', parameters, function(data){
-  //       $('#results').html(data);
-  //     });
-  //   };
-  // });
-  /*
-    ~ Need to send the results back to node to do another search
-    ~ Clicking the link should take you to another list
-    ~ Get the fucking css to work
-  */
   $('#results').append('<ul id="zipSearch">');
 
   $(ZipCode).each(function(i,j){
-    $('#zipSearch').append('<li><a href='+j.zip+'>'+j.zip+'</li>');
+    $('#zipSearch').append('<li><a href=#>'+j.zip+'</li>');
   });
 
   $('li').append('</ul>');
@@ -35,15 +19,18 @@ $(function(){
       $('li').hide();
     }
   });
-  // This should look for the li click
+
   $('li a').on('click', function(e){
     e.preventDefault();
     var parameters = {
       search:$(this).text()
     }
-    console.log(parameters.search);
+    /*
+      ~ New page with search bar
+      ~ Hide zips
+    */
     $.get('/searching', parameters, function(data){
-
+      console.log(data);
     });
   });
 

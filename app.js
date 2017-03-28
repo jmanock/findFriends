@@ -91,7 +91,8 @@ app.get('/searching', function(req,res){
     var unique = address.filter(function(elem, index, self){
       return index == self.indexOf(elem);
     });
-    console.log('dups: ', unique);
+    // console.log('dups: ', unique);
+    res.send(unique);
   }
 });
 
