@@ -61,12 +61,12 @@ app.get('/searching', function(req,res){
         var incBox = matches.includes(' BOX');
 
         if(incApt === true || incRm === true || incUnit === true || incSte === true || incPh === true || incBld === true || incBox === true){
-          if(incApt === true){
-            newAddress = matches.split('APT')[0];
+          if(incUnit === true){
+            newAddress = matches.split('UNIT')[0];
           }else if(incRm === true){
             newAddress = matches.split('RM')[0];
-          }else if(incUnit === true){
-            newAddress = matches.split('UNIT')[0];
+          }else if(incApt === true){
+            newAddress = matches.split('APT')[0];
           }else if(incSte === true){
             newAddress = matches.split('STE')[0];
           }else if(incPh === true){
@@ -91,7 +91,7 @@ app.get('/searching', function(req,res){
     var unique = address.filter(function(elem, index, self){
       return index == self.indexOf(elem);
     });
-    console.log('dups: ', unique.length);
+    console.log('dups: ', unique);
   }
 });
 
