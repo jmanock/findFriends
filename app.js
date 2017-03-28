@@ -52,7 +52,8 @@ app.get('/searching', function(req,res){
         var something = addressList.includes('APT'||'UNIT');
         // var somethingElse = addressList.includes('UNIT');
         if(something === true){
-          var split = addressList.replace('APT' || 'UNIT', ' ');
+          // This works but need to get rid of the number at the end
+          var split = addressList.split('APT' || 'UNIT')[0];
           console.log(split);
         }
         /*
