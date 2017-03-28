@@ -8,6 +8,8 @@ $(function(){
   $('li').append('</ul>');
 
   $('li').hide();
+  $('#address').hide();
+
   $('#search').on('keyup', function(){
     var searchNum = parseInt($(this).val());
     var zipNum = $('li').text();
@@ -25,12 +27,18 @@ $(function(){
     var parameters = {
       search:$(this).text()
     }
+    $('#zip').hide();
+    $('#address').show();
     /*
       ~ New page with search bar
       ~ Hide zips
     */
     $.get('/searching', parameters, function(data){
-      console.log(data);
+      $('#result').append('<ul id="addressResults">');
+      $(data).each(function(i,k){
+        $('#addressResults').append('<li><a href=#>'+k+'</li>');
+      });
+      $('li').append('</ul>');
     });
   });
 
