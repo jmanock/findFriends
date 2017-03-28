@@ -43,6 +43,11 @@ app.get('/searching', function(req,res){
   var val = req.query.search;
   var url = 'http://flvoters.com/by_address/'+val+'.html';
   console.log(url);
+  request(url, function(err, response, body){
+    if(!err && response.statusCode === 200){
+      var $ = cheerio.load(body);
+    }
+  });
 });
 
 http.createServer(app).listen(app.get('port'), function(){
