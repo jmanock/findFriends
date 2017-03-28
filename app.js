@@ -43,13 +43,24 @@ app.get('/searching', function(req,res){
   var val = req.query.search;
   var url = 'http://flvoters.com/by_address/'+val+'.html';
   console.log(url);
+  var address = [];
   request(url, function(err, response, body){
     if(!err && response.statusCode === 200){
       var $ = cheerio.load(body);
       $('big b').each(function(i,data){
-        var something = $(this).text();
-        console.log(something);
-      })
+        var addressList = $(this).text();
+        var something = addressList.includes('APT'||'UNIT');
+        // var somethingElse = addressList.includes('UNIT');
+        if(something === true){
+          var split = addressList.replace('APT' || 'UNIT', ' ');
+          console.log(split);
+        }
+        /*
+          ~ Need to get rid of apt/unit #
+          ~ Return to user somehow
+          ~ Maybe push to array or save list then delete it
+        */
+      });
     }
   });
 });
