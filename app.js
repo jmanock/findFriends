@@ -46,6 +46,10 @@ app.get('/searching', function(req,res){
   request(url, function(err, response, body){
     if(!err && response.statusCode === 200){
       var $ = cheerio.load(body);
+      $('big b').each(function(i,data){
+        var something = $(this).text();
+        console.log(something);
+      })
     }
   });
 });
