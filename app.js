@@ -48,36 +48,51 @@ app.get('/searching', function(req,res){
     if(!err && response.statusCode === 200){
       var $ = cheerio.load(body);
       $('big b').each(function(i,data){
+        // var addressList = $(this).text();
+        // var matches = addressList.replace(/[0-9]/g,'');
+        // var doesIncludeApt = matches.includes('APT');
+        // var doesIncludeUnit = matches.includes('UNIT');
+        // if(doesIncludeUnit === true || doesIncludeApt === true){
+        //   if(doesIncludeUnit === true){
+        //     newAddressList = matches.split('UNIT')[0].trim();
+        //   }else{
+        //     newAddressList = matches.split('APT')[0].trim();
+        //   }
+        //   address.push(newAddressList);
+        // }else{
+        //   address.push(addressList);
+        // }
         var addressList = $(this).text();
-        var doesIncludeApt = addressList.includes('APT');
-        var doesIncludeUnit = addressList.includes('UNIT');
-        if(doesIncludeUnit === true || doesIncludeApt === true){
+        var matches = addressList.replace(/[0-9]/g, ' ').trim();
+        var doesIncludeApt = matches.includes('APT');
+        var doesIncludeUnit = matches.includes('UNIT');
+        if(doesIncludeApt === true || doesIncludeUnit === true){
           if(doesIncludeUnit === true){
-            newAddressList = addressList.split('UNIT')[0].trim();
+            newAddressList = matches.split('UNIT')[0].trim();
           }else{
-            newAddressList = addressList.split('APT')[0].trim();
+            newAddressList = matches.split('APT')[0].trim();
           }
           address.push(newAddressList);
         }else{
-          address.push(addressList);
+          address.push(matches);
         }
         /*
-          ~ Get rid of white space before function
+          ~ Need to shorten the list
+            ~ How about get rid of the numbers and return street names
           ~ Return to user somehow
-          ~ Maybe push to array or save list then delete it
         */
       });
-      //console.log('AddressLength: ', address.length);
-      something(address);
+       console.log('AddressLength: ', address.length);
+      dups(address);
     }
   });
-  function something(address){
+  function dups(address){
+    // This gets rid of dups
     var something =[];
     var unique = address.filter(function(elem, index, self){
       return index == self.indexOf(elem);
     });
-    //console.log('ShouldBeSmaller: ',unique.length);
-    console.log(unique);
+    console.log('dups: ', unique.length);
   }
 });
 
