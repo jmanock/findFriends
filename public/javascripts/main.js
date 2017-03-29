@@ -1,48 +1,63 @@
-$(function(){
-  $('#results').append('<ul id="zipSearch">');
+(function(){
+  var FindFriends = function(){
 
-  $(ZipCode).each(function(i,j){
-    $('#zipSearch').append('<li><a href=#>'+j.zip+'</li>');
-  });
+    var startSetup = function(){
+      $('#address').hide();
+      $(ZipCode).each(function(i,k){
+        $('#results').append('<li><a href=#>'+k.zip+'</li>');
+      });
+    };
 
-  $('li').append('</ul>');
+    var SearchZip = function(){
+      // Need to show list if nothing in the list
+      // Should be able to use this again with address
+      $('#search').on('keyup', function(){
+        if(this.value.length > 0){
+          $('li').hide().filter(function(){
+            return $(this).text().indexOf($('#search').val()) != -1;
+          }).show();
+        }else{
+          $('li').hide();
+        }
+      });
+      $('li a').on('click', function(e){
+        e.preventDefault();
+        // Maybe a back button
+        $('#zip').fadeOut('slow');
+        $('#address').fadeIn('slow');
 
-  $('li').hide();
-  $('#address').hide();
+        var parameters = {
+          search:$(this).text()
+        };
+        // Need a load function animation
+        $.get('/searching', parameters, function(data){
+          Address(data);
+        });
+      });
+    };
 
-  $('#search').on('keyup', function(){
-    var searchNum = parseInt($(this).val());
-    var zipNum = $('li').text();
-    if(this.value.length > 0){
-      $('#zipSearch li').hide().filter(function(){
-        return $(this).text().indexOf($('#search').val()) != -1;
-      }).show();
-    }else{
-      $('li').hide();
-    }
-  });
-
-  $('li a').on('click', function(e){
-    e.preventDefault();
-    var parameters = {
-      search:$(this).text()
-    }
-    $('#zip').hide();
-    $('#address').show();
-    /*
-      ~ New page with search bar
-      ~ Hide zips
-    */
-    $.get('/searching', parameters, function(data){
-      $('#result').append('<ul id="addressResults">');
+    var Address = function(data){
       $(data).each(function(i,k){
         $('#addressResults').append('<li><a href=#>'+k+'</li>');
       });
-      $('li').append('</ul>');
-    });
-  });
+    };
 
-});
+    var feed = {
+      init:function(){
+        startSetup();
+        this.bindUI();
+      },
+      bindUI:function(){
+        SearchZip()
+      },
+    }
+    return feed;
+  };
+  $(function(){
+    var Start = new FindFriends();
+    Start.init();
+  });
+})();
 
 var ZipCode = [
   {zip:32003},
