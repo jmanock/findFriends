@@ -13,13 +13,15 @@
       // Need to show list if nothing in the list
       // Should be able to use this again with address
       $('#search').on('keyup', function(){
-        if(this.value.length > 0){
-          $('li').hide().filter(function(){
-            return $(this).text().indexOf($('#search').val()) != -1;
-          }).show();
-        }else{
-          $('li').hide();
-        }
+        var filter = $(this).val(), count = 0;
+        $('li > a').each(function(){
+          if($(this).text().search(new RegExp(filter, "i"))<0){
+            $(this).fadeOut();
+          }else{
+            $(this).show();
+            count++
+          }
+        });
       });
       $('li a').on('click', function(e){
         e.preventDefault();
@@ -35,15 +37,16 @@
       });
     };
 
-    // This needs to be in with the other function
     $('#addressSearch').on('keyup', function(){
-      if(this.value.length > 0){
-        $('#addressResults').hide().filter(function(){
-          return $(this).text().indexOf($('#addressSearch').val())!= -1;
-        }).show();
-      }else{
-        $('#addressResults').hide();
-      }
+      var filter = $(this).val().toUpperCase(), count = 0;
+      $('li > a').each(function(){
+        if($(this).text().search(new RegExp(filter, "i"))<0){
+          $(this).fadeOut();
+        }else{
+          $(this).show();
+          count++;
+        }
+      });
     });
     var Address = function(data){
       // Should be able to run search on this
