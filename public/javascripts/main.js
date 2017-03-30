@@ -35,7 +35,18 @@
       });
     };
 
+    // This needs to be in with the other function
+    $('#addressSearch').on('keyup', function(){
+      if(this.value.length > 0){
+        $('#addressResults').hide().filter(function(){
+          return $(this).text().indexOf($('#addressSearch').val())!= -1;
+        }).show();
+      }else{
+        $('#addressResults').hide();
+      }
+    });
     var Address = function(data){
+      // Should be able to run search on this
       $(data).each(function(i,k){
         $('#addressResults').append('<li><a href=#>'+k+'</li>');
       });
