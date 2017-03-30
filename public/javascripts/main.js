@@ -2,6 +2,7 @@
   var FindFriends = function(){
 
     var startSetup = function(){
+      $('#loader').hide();
       $('#address').hide();
       $(ZipCode).each(function(i,k){
         $('#results').append('<li><a href=#>'+k.zip+'</li>');
@@ -23,13 +24,17 @@
       $('li a').on('click', function(e){
         e.preventDefault();
         // Maybe a back button
-        $('#zip').fadeOut('slow');
-        $('#address').fadeIn('slow');
+      //  $('#zip').fadeOut('slow');
+      //  $('#address').fadeIn('slow');
 
         var parameters = {
           search:$(this).text()
         };
         // Need a load function animation
+        $(document).ajaxStart(function(){
+          $('#loader').css('display', 'block');
+          console.log('We wait here');
+        });
         $.get('/searching', parameters, function(data){
           Address(data);
         });
@@ -40,6 +45,10 @@
       $(data).each(function(i,k){
         $('#addressResults').append('<li><a href=#>'+k+'</li>');
       });
+      $(document).ajaxComplete(function(){
+        $('#loader').css('display', 'none');
+        console.log('we is done waiting');
+      });
     };
 
     var feed = {
@@ -49,10 +58,11 @@
       },
       bindUI:function(){
         SearchZip()
-      },
+      }
     }
     return feed;
   };
+
   $(function(){
     var Start = new FindFriends();
     Start.init();
