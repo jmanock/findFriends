@@ -26,19 +26,10 @@ app.get('/', function(req,res){
   res.render('index');
 });
 
+
 app.get('/searching', function(req,res){
   /*
-    ~ Look up ZipCode
-    ~ Return List of Address
-    PART 3
-    ~ Click Address
-    ~ Return list of People
-    PART 4
-    ~ Able to click on people for google search
-    ~ Maybe show a map
-    ~ Highlight sex offenders
-    STRECH
-    ~ Look up crimanil record
+    ~ Need to get rid of that garbage at the end
   */
   var val = req.query.search;
   var url = 'http://flvoters.com/by_address/'+val+'.html';
@@ -94,6 +85,11 @@ app.get('/searching', function(req,res){
     // console.log('dups: ', unique);
     res.send(unique);
   }
+});
+
+app.get('/address', function(req,res){
+  var val = req.query.search;
+  console.log(val);
 });
 
 http.createServer(app).listen(app.get('port'), function(){

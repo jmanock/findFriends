@@ -37,21 +37,33 @@
       });
     };
 
-    $('#addressSearch').on('keyup', function(){
-      var filter = $(this).val().toUpperCase(), count = 0;
-      $('li > a').each(function(){
-        if($(this).text().search(new RegExp(filter, "i"))<0){
-          $(this).fadeOut();
-        }else{
-          $(this).show();
-          count++;
-        }
-      });
-    });
     var Address = function(data){
       // Should be able to run search on this
       $(data).each(function(i,k){
         $('#addressResults').append('<li><a href=#>'+k+'</li>');
+      });
+      AddressSearch();
+    };
+
+    var AddressSearch = function(){
+      $('#addressSearch').on('keyup', function(){
+        var filter = $(this).val().toUpperCase(), count = 0;
+        $('li > a').each(function(){
+          if($(this).text().search(new RegExp(filter, "i"))<0){
+            $(this).fadeOut();
+          }else{
+            $(this).show();
+            count++;
+          }
+        });
+      });
+      $('li > a').on('click', function(){
+        var parameters = {
+          search:$(this).text()
+        };
+        $.get('/address', parameters, function(data){
+          // Send to another function
+        });
       });
     };
 
