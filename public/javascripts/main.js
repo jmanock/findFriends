@@ -23,18 +23,12 @@
       });
       $('li a').on('click', function(e){
         e.preventDefault();
-        // Maybe a back button
-      //  $('#zip').fadeOut('slow');
-      //  $('#address').fadeIn('slow');
 
+        feed.loadFeed();
         var parameters = {
           search:$(this).text()
         };
-        // Need a load function animation
-        $(document).ajaxStart(function(){
-          $('#loader').css('display', 'block');
-          console.log('We wait here');
-        });
+
         $.get('/searching', parameters, function(data){
           Address(data);
         });
@@ -45,10 +39,6 @@
       $(data).each(function(i,k){
         $('#addressResults').append('<li><a href=#>'+k+'</li>');
       });
-      $(document).ajaxComplete(function(){
-        $('#loader').css('display', 'none');
-        console.log('we is done waiting');
-      });
     };
 
     var feed = {
@@ -58,6 +48,15 @@
       },
       bindUI:function(){
         SearchZip()
+      },
+      loadFeed:function(){
+        $(document).ajaxStart(function(){
+          $('#zip').fadeOut('slow');
+          $('#loader').css('display', 'block');
+        }).ajaxStop(function(){
+          $('#address').fadeIn('slow');
+          $('#loader').css('display', 'none');
+        });
       }
     }
     return feed;
