@@ -1,6 +1,7 @@
 (function(){
   var FindFriends = function(){
     var SetUp = function(){
+      $('#adr').hide();
       $('#loader').hide();
       $(ZipCode).each(function(i,k){
         $('#results').append('<li><a href=#>'+k.zip+'</a></li>');
@@ -19,13 +20,10 @@
           }
         });
       });// End `KeyUp`
-
       $('a').on('click', function(e){
         e.preventDefault();
-        $('#results').empty();
-        $('input:text').focus(function(){
-          $(this).val('');
-        });
+        $('#zip').fadeOut('slow');
+        $('#adr').fadeIn('slow');
         feed.loadFeed();
         var params = {
           search:$(this).text()
@@ -33,23 +31,39 @@
         Sending(params);
       });// End `Click`
     };// End `SearchBar`
+
     var Sending = function(params){
       $.get('/searching', params, function(data){
         //console.log(data);
         Address(data);
       });
     };// End `Sending`
+
     var Address = function(data){
       $(data).each(function(i,k){
-        $('#addressResults').append('<li><a href=#>'+k+'</a></li>');
+        $('#addResults').append('<li><a href=#>'+k+'</a></li>');
       });
-      SearchBar();
+      $('#search').on('keyup', function(){
+        var filter = $(this).val().toUpperCase(), count = 0;
+        $('a').each(function(){
+          if($(this).text().search(new RegExp(filter,'i'))<0){
+            $(this).hide();
+          }else{
+            $(this).show();
+          }
+        });
+      });// End `keyUp`
+      $('a').on('click', function(){
+        feed.loadFeed();
+        var params = {
+          address:$(this).text()
+        };
+        $.get('/searching', params, function(data){
+          console.log(data);
+        });
+      })// End `Click`
     };// End `Address`
     /*
-      ~ Need to clear the text box after click
-        - New placeholder
-      ~ Do back end work
-      ~ Clear zip records
       ~ Show address
     */
 

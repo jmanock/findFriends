@@ -3,7 +3,7 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-#search{
+input{
   width:500px;
   height:70px;
   font-size:2.5em;

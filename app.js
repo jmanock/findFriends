@@ -69,6 +69,7 @@ app.get('/searching', function(req,res){
       return index == self.indexOf(elem);
     });
     console.log(noDups.length);
+    // Start new function with address and user address
     res.send(noDups);
   }// End `Dups`
 });
