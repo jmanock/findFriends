@@ -1,98 +1,74 @@
 (function(){
   var FindFriends = function(){
-
-    var startSetup = function(){
+    var SetUp = function(){
       $('#loader').hide();
-      $('#address').hide();
       $(ZipCode).each(function(i,k){
-        $('#results').append('<li><a href=#>'+k.zip+'</li>');
+        $('#results').append('<li><a href=#>'+k.zip+'</a></li>');
       });
-    };
+    };// `End Setup`
 
-    var SearchZip = function(){
-      // Need to show list if nothing in the list
-      // Should be able to use this again with address
+    var SearchBar = function(){
       $('#search').on('keyup', function(){
-        var filter = $(this).val(), count = 0;
-        $('li > a').each(function(){
-          if($(this).text().search(new RegExp(filter, "i"))<0){
-            $(this).fadeOut();
-          }else{
-            $(this).show();
-            count++
-          }
-        });
-      });
-      $('li a').on('click', function(e){
-        e.preventDefault();
-
-        feed.loadFeed();
-        var parameters = {
-          search:$(this).text()
-        };
-
-        $.get('/searching', parameters, function(data){
-          Address(data);
-        });
-      });
-    };
-
-    var Address = function(data){
-      // Should be able to run search on this
-      $(data).each(function(i,k){
-        $('#addressResults').append('<li><a href=#>'+k+'</li>');
-      });
-      AddressSearch();
-    };
-
-    var AddressSearch = function(){
-      $('#addressSearch').on('keyup', function(){
         var filter = $(this).val().toUpperCase(), count = 0;
-        $('li > a').each(function(){
-          if($(this).text().search(new RegExp(filter, "i"))<0){
-            $(this).fadeOut();
+        $('a').each(function(){
+          if($(this).text().search(new RegExp(filter, 'i'))<0){
+            $(this).hide();
           }else{
             $(this).show();
             count++;
           }
         });
-      });
-      $('li > a').on('click', function(){
-        var parameters = {
+      });// End `KeyUp`
+
+      $('a').on('click', function(e){
+        e.preventDefault();
+        feed.loadFeed();
+        var params = {
           search:$(this).text()
         };
-        $.get('/address', parameters, function(data){
-          // Send to another function
-        });
+        Sending(params);
+      });// End `Click`
+
+    };// End `SearchBar`
+    var Sending = function(params){
+      $.get('/searching', params, function(data){
+        console.log(data);
       });
-    };
+    };// End `Sending`
+    /*
+      ~ Need to clear the text box after click
+        - New placeholder
+      ~ Do back end work
+      ~ Clear zip records
+      ~ Show address
+    */
 
     var feed = {
       init:function(){
-        startSetup();
+        SetUp();
         this.bindUI();
       },
       bindUI:function(){
-        SearchZip()
+        SearchBar();
       },
       loadFeed:function(){
         $(document).ajaxStart(function(){
-          $('#zip').fadeOut('slow');
           $('#loader').css('display', 'block');
         }).ajaxStop(function(){
-          $('#address').fadeIn('slow');
           $('#loader').css('display', 'none');
         });
       }
-    }
+    };// End `Feed`
     return feed;
-  };
+  };// End `FindFriends`
 
-  $(function(){
-    var Start = new FindFriends();
-    Start.init();
-  });
+$(function(){
+  var Start = new FindFriends();
+  Start.init();
+});
+
 })();
+
 
 var ZipCode = [
   {zip:32003},

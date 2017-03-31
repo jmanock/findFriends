@@ -1,13 +1,19 @@
 {
-  "name": "FindFriends",
-  "version": "0.0.1",
+  "name": "findfriends",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node ./bin/www"
   },
   "dependencies": {
+    "body-parser": "~1.17.1",
     "cheerio": "^0.22.0",
-    "express": "3.4.0",
-    "jade": "latest",
-    "request": "latest"
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "morgan": "~1.8.1",
+    "pug": "~2.0.0-beta11",
+    "request": "^2.81.0",
+    "serve-favicon": "~2.4.2"
   }
 }
