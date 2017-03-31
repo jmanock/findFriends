@@ -23,7 +23,9 @@
       $('a').on('click', function(e){
         e.preventDefault();
         $('#results').empty();
-        $('input').empty();
+        $('input:text').focus(function(){
+          $(this).val('');
+        });
         feed.loadFeed();
         var params = {
           search:$(this).text()
