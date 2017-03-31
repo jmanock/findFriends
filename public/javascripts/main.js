@@ -22,19 +22,27 @@
 
       $('a').on('click', function(e){
         e.preventDefault();
+        $('#results').empty();
+        $('input').empty();
         feed.loadFeed();
         var params = {
           search:$(this).text()
         };
         Sending(params);
       });// End `Click`
-
     };// End `SearchBar`
     var Sending = function(params){
       $.get('/searching', params, function(data){
-        console.log(data);
+        //console.log(data);
+        Address(data);
       });
     };// End `Sending`
+    var Address = function(data){
+      $(data).each(function(i,k){
+        $('#addressResults').append('<li><a href=#>'+k+'</a></li>');
+      });
+      SearchBar();
+    };// End `Address`
     /*
       ~ Need to clear the text box after click
         - New placeholder

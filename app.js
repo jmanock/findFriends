@@ -30,8 +30,47 @@ app.use('/', index);
 app.get('/searching', function(req,res){
   var val = req.query.search;
   var url = 'http://flvoters.com/by_address/'+val+'.html';
+  var address = [];
   console.log(url);
-  res.send(url);
+  request(url, function(err, response, body){
+    if(!err && response.statusCode === 200){
+      var $ = cheerio.load(body);
+      $('big b').each(function(i,k){
+         var matches = $(this).text();
+        /*
+          ~ Keep address
+          ~ Kill dups of the same address
+          ~ Return
+        */
+
+        if(matches.includes(' APT')){
+          matches = matches.split('APT')[0];
+        }else if(matches.includes(' UNIT')){
+          matches = matches.split('UNIT')[0];
+        }else if(matches.includes(' STE')){
+          matches = matches.split('STE')[0];
+        }else if(matches.includes(' RM')){
+          matches = matches.split('RM')[0];
+        }else if(matches.includes(' PH')){
+          matches = matches.split('PH')[0];
+        }else if(matches.includes(' BLDG')){
+          matches = matches.split('BLDG')[0];
+        }else if(matches.includes(' BOX')){
+          matches = matches.split('BOX')[0];
+        }
+        address.push(matches);
+      });// End  `Each`
+
+      Dups(address);
+    }
+  });// End `Request`
+  function Dups(address){
+    var noDups = address.filter(function(elem, index, self){
+      return index == self.indexOf(elem);
+    });
+    console.log(noDups.length);
+    res.send(noDups);
+  }// End `Dups`
 });
 
 module.exports = app;
