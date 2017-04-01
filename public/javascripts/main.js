@@ -43,7 +43,7 @@
       $(data).each(function(i,k){
         $('#addResults').append('<li><a href=#>'+k+'</a></li>');
       });
-      $('#search').on('keyup', function(){
+      $('#addSearch').on('keyup', function(){
         var filter = $(this).val().toUpperCase(), count = 0;
         $('a').each(function(){
           if($(this).text().search(new RegExp(filter,'i'))<0){
@@ -59,13 +59,10 @@
           address:$(this).text()
         };
         $.get('/searching', params, function(data){
-          console.log(data);
+          //console.log(data);
         });
       })// End `Click`
     };// End `Address`
-    /*
-      ~ Show address
-    */
 
     var feed = {
       init:function(){

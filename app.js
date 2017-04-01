@@ -37,11 +37,6 @@ app.get('/searching', function(req,res){
       var $ = cheerio.load(body);
       $('big b').each(function(i,k){
          var matches = $(this).text();
-        /*
-          ~ Keep address
-          ~ Kill dups of the same address
-          ~ Return
-        */
 
         if(matches.includes(' APT')){
           matches = matches.split('APT')[0];
@@ -60,18 +55,23 @@ app.get('/searching', function(req,res){
         }
         address.push(matches);
       });// End  `Each`
-
       Dups(address);
     }
   });// End `Request`
   function Dups(address){
+    /*
+      ~ Get the address chosen
+      ~ Run threw the url page
+      ~ All Matches of the address return names
+      ~ Have to store the url
+      ~ Looks like a differed promise
+    */
     var noDups = address.filter(function(elem, index, self){
       return index == self.indexOf(elem);
     });
     console.log(noDups.length);
-    // Start new function with address and user address
     res.send(noDups);
   }// End `Dups`
-});
+});// End `Get`
 
 module.exports = app;
