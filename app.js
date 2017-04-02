@@ -72,7 +72,15 @@ app.get('/searching', function(req,res){
   function Next(namesArray, urlArray){
     namesArray = namesArray.filter(Boolean);
     namesArray.sort();
-    console.log(namesArray);
+    for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
+      if(namesArray[i] === lastName){
+        call = namesArray.indexOf(lastName);
+        call = urlArray[call];
+        console.log(call);
+      }
+    }// End `For`
+
+  //  Request(call);
   }// End `Next Function`
 });// End `Get`
 
