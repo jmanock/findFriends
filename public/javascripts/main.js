@@ -6,7 +6,7 @@
       var split = search.split(' ');
       var firstName = split[0];
       var lastName = split[1];
-      var firstChar = lastName.charAt(0);
+      var firstChar = lastName.charAt(0).toLowerCase();
 
       var params = {
         firstName:firstName,
