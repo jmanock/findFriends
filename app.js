@@ -35,29 +35,36 @@ app.get('/searching', function(req,res){
   var firstName = req.query.firstName;
   var lastName = req.query.lastName;
   var firstChar = req.query.firstChar;
+  var something = [];
+  //something.push(lastName);
   var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
   console.log(url);
   request(url, function(err, response, body){
     if(!err && response.statusCode === 200){
       var $ = cheerio.load(body);
       /*
-        ~ Get rid of all the junk links
+        ~ Return non junk
         ~ Search where the last name would go
         ~ Go to that link somehow
         ~ Open last page
         ~ Return names on the list
       */
+
       $('a').each(function(i,k){
         var names = $(this).text();
         var links = $(this).attr('href');
+        var sik = names.replace(/\r?\n|\r/+/g, ' ');
+        console.log(sik);
         if(names === 'Home Page'){
           names = ' ';
         }
         if(names === 'Form N-400'){
           names = ' ';
         }
-        console.log(names);
-      });
+        something.push(names);
+
+      });// End  `Each`
+      //console.log(something);
     }
   })// End `Request`
 });// End `Get`
