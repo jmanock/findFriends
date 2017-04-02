@@ -43,11 +43,6 @@ app.get('/searching', function(req,res){
   request(url, function(err, response, body){
     if(!err && response.statusCode === 200){
       var $ = cheerio.load(body);
-      /*
-        ~ Go to that link somehow
-        ~ Open last page
-        ~ Return names on the list
-      */
 
       $('a').each(function(i,k){
         var names = $(this).text();
@@ -67,9 +62,37 @@ app.get('/searching', function(req,res){
       namesArray.push(lastName);
       namesArray = namesArray.filter(Boolean);
       namesArray.sort();
-      console.log(namesArray);
+      urlArray = urlArray.filter(Boolean);
+      Next(namesArray, urlArray);
     }
-  })// End `Request`
+  });// End `Request`
+  function Next(namesArray, urlArray){
+    var something = [];
+    var somethingElse = [];
+    for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
+      if(namesArray[i] === lastName){
+        call = namesArray.indexOf(lastName);
+        call = urlArray[call - 1];
+      }
+    }
+    request(call, function(err, response, body){
+      if(!err && response.statusCode === 200){
+        var $ = cheerio.load(body);
+        $('a').each(function(i,k){
+           knames = $(this).text();
+           kurls = $(this).attr('href');
+          knames = knames.replace(/\r?\n|\r/g,"");
+          something.push(knames);
+        });//End `Each`
+        something.push(lastName);
+        something.sort();
+      }
+      kNext(knames, kurls);
+    });// End `Request`
+  }// End `Next Function`
+  function kNext(knames, kurls){
+    console.log(knames);
+  }
 });// End `Get`
 
 module.exports = app;
