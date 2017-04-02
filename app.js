@@ -26,52 +26,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 
-
+/*
+  ~ Split the name into first and last
+  ~ Load the url
+  ~ Request to the search
+*/
 app.get('/searching', function(req,res){
-  var val = req.query.search;
-  var url = 'http://flvoters.com/by_address/'+val+'.html';
-  var address = [];
-  console.log(url);
-  request(url, function(err, response, body){
-    if(!err && response.statusCode === 200){
-      var $ = cheerio.load(body);
-      $('big b').each(function(i,k){
-         var matches = $(this).text();
+  var firstName = req.query.firstName;
+  var lastName = req.query.lastName;
+  var firstChar = req.query.firstChar;
+  console.log(lastName, firstChar, firstName);
+  var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
 
-        if(matches.includes(' APT')){
-          matches = matches.split('APT')[0];
-        }else if(matches.includes(' UNIT')){
-          matches = matches.split('UNIT')[0];
-        }else if(matches.includes(' STE')){
-          matches = matches.split('STE')[0];
-        }else if(matches.includes(' RM')){
-          matches = matches.split('RM')[0];
-        }else if(matches.includes(' PH')){
-          matches = matches.split('PH')[0];
-        }else if(matches.includes(' BLDG')){
-          matches = matches.split('BLDG')[0];
-        }else if(matches.includes(' BOX')){
-          matches = matches.split('BOX')[0];
-        }
-        address.push(matches);
-      });// End  `Each`
-      Dups(address);
-    }
-  });// End `Request`
-  function Dups(address){
-    /*
-      ~ Get the address chosen
-      ~ Run threw the url page
-      ~ All Matches of the address return names
-      ~ Have to store the url
-      ~ Looks like a differed promise
-    */
-    var noDups = address.filter(function(elem, index, self){
-      return index == self.indexOf(elem);
-    });
-    console.log(noDups.length);
-    res.send(noDups);
-  }// End `Dups`
 });// End `Get`
 
 module.exports = app;

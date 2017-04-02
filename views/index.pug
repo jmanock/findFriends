@@ -1,13 +1,10 @@
 extends layout
 
 block content
-  h1 Find Friends
+  h1 Find My Friends
   p#loader
-  div#zip
-    input#search(type='number', placeholder='Search for a ZipCode' autofocus)
-    h2#results
-  div#adr
-    input#addSearch(type='text', placeholder='Search for an Address')
-    h2#addResults
+  div#content
+    input#search(type='text' placeholder='Search First Name Last Name' autofocus)
+    h3#results
   script(src='https://code.jquery.com/jquery-3.2.1.min.js')
   script(src='/javascripts/main.js')
