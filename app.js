@@ -66,25 +66,34 @@ app.get('/searching', function(req,res){
   function kewl (x){
     request(x, function(err, response, body){
       var something = [];
+      var ksomething = [];
       if(!err && response.statusCode === 200){
         var $ = cheerio.load(body);
         $('a').each(function(){
           var knames = $(this).text();
           knames = knames.replace(/\r?\n|\r/g,"");
           var klinks = $(this).attr('href');
-          something.push({
-            name:knames,
-            links:klinks
-          });
+          if(knames === 'Form N-400' || knames === 'Home Page'){
+
+          }else{
+            something.push(knames);
+            ksomething.push(klinks);
+          }
+
         });
-        // namesArray.push(fullName);
-        // namesArray.sort();
-        // for(var k = 0; k<namesArray.length && k<urlArray.length; k++){
-        //   console.log(namesArray[k]);
-        //   console.log(urlArray[k]);
-        // }
+        something.push(fullName);
+        something.sort();
+        var index;
         for(var i = 0; i<something.length; i++){
+          if(something[i] === fullName){
+            index = i;
+          }
           console.log(something[i]);
+        }
+        for(var k = 0; k<ksomething.length; k++){
+          if(index === k){
+            console.log(ksomething[k]);
+          }
         }
       }
     })
