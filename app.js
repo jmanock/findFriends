@@ -35,8 +35,9 @@ app.get('/searching', function(req,res){
   var firstName = req.query.firstName;
   var lastName = req.query.lastName;
   var firstChar = req.query.firstChar;
-  var something = [];
-  something.push(lastName);
+  var namesArray = [];
+  var urlArray = [];
+  //something.push(lastName);
   var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
   console.log(url);
   request(url, function(err, response, body){
@@ -50,20 +51,23 @@ app.get('/searching', function(req,res){
 
       $('a').each(function(i,k){
         var names = $(this).text();
-        names = names.replace(/\r?\n|\r/g, '');
-        var links = $(this).attr('href');
+        names = names.replace(/\r?\n|\r/g,"");
+         links = $(this).attr('href');
         if(names === 'Home Page'){
-          names = ' ';
+          names = '';
+          links = '';
         }
         if(names === 'Form N-400'){
-          names = ' ';
+          names = '';
+          links = '';
         }
-        something.push(names);
-
+        namesArray.push(names);
+        urlArray.push(links);
       });// End  `Each`
-      something.sort();
-      // Have to request the next page after sort
-      console.log(something);
+      namesArray.push(lastName);
+      namesArray = namesArray.filter(Boolean);
+      namesArray.sort();
+      console.log(namesArray);
     }
   })// End `Request`
 });// End `Get`
