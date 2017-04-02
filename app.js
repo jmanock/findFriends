@@ -36,15 +36,13 @@ app.get('/searching', function(req,res){
   var lastName = req.query.lastName;
   var firstChar = req.query.firstChar;
   var something = [];
-  //something.push(lastName);
+  something.push(lastName);
   var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
   console.log(url);
   request(url, function(err, response, body){
     if(!err && response.statusCode === 200){
       var $ = cheerio.load(body);
       /*
-        ~ Return non junk
-        ~ Search where the last name would go
         ~ Go to that link somehow
         ~ Open last page
         ~ Return names on the list
@@ -52,9 +50,8 @@ app.get('/searching', function(req,res){
 
       $('a').each(function(i,k){
         var names = $(this).text();
+        names = names.replace(/\r?\n|\r/g, '');
         var links = $(this).attr('href');
-        var sik = names.replace(/\r?\n|\r/+/g, ' ');
-        console.log(sik);
         if(names === 'Home Page'){
           names = ' ';
         }
@@ -64,7 +61,9 @@ app.get('/searching', function(req,res){
         something.push(names);
 
       });// End  `Each`
-      //console.log(something);
+      something.sort();
+      // Have to request the next page after sort
+      console.log(something);
     }
   })// End `Request`
 });// End `Get`
