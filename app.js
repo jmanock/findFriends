@@ -89,21 +89,16 @@ app.get('/searching', function(req,res){
         });
         something.push(fullName);
         something.sort();
-        // var index;
-        // for(var i = 0; i<something.length; i++){
-        //   if(something[i] === fullName){
-        //     index = i;
-        //   }
-        //   console.log(something[i]);
-        // }
-        // for(var k = 0; k<ksomething.length; k++){
-        //   if(index === k){
-        //     console.log(ksomething[k]);
-        //   }
-        // }
+        /*
+          ~ Found the bug
+          ~ Not stopping after the comma to sort
+          ~ Have to figure out a fix for comma to be at the top
+        */
         for(var i = 0; i<something.length && i<ksomething.length; i++){
+          console.log(i, something[i]);
+          console.log(ksomething[i]);
           if(fullName === something[i]){
-            console.log(ksomething[i-1]);
+            //console.log(ksomething[i-1]);
           }
         }
       }
