@@ -40,55 +40,55 @@ app.get('/searching', function(req,res){
   var urlArray = [];
   var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
   console.log(url);
-  /*
-    ~ Need to add first name for the last check
-  */
-  Request(url);
-  function Request(url){
-    request(url, function(err, response, body){
-      if(!err && response.statusCode === 200){
-        var $ = cheerio.load(body);
-        $('a').each(function(i,k){
-          names = $(this).text();
-          names = names.replace(/\r?\n|\r/g,"");
-          links = $(this).attr('href');
 
-          if(names === 'Home Page'){
-            names = '';
-            links = '';
-          }
-          if(names === 'Form N-400'){
-            names = '';
-            links = '';
-          }
-          namesArray.push(names);
-          urlArray.push(links);
-        });// End `Each`
-        namesArray.push(fullName);
-        if(namesArray.length < 300){
-          Next(namesArray, urlArray);
-        }else{
-          console.log('We are at the last page');
-        }
-
-      }
-    });// End `Request`
-  }// End `Request Function`
-  function Next(namesArray, urlArray){
-    namesArray = namesArray.filter(Boolean);
+  request(url, function(err, response, body){
+    if(!err && response.statusCode === 200){
+      something(body);
+    }
+  });// End `request`
+  function something(body){
+    var $ = cheerio.load(body);
+    $('a').each(function(){
+      var names = $(this).text();
+      names = names.replace(/\r?\n|\r/g,"");
+      var links = $(this).attr('href');
+      namesArray.push(names);
+      urlArray.push(links);
+    });
+    namesArray.push(fullName);
     namesArray.sort();
-    urlArray.sort();
     for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
       if(namesArray[i] === fullName){
-        call = namesArray.indexOf(fullName);
-        call = urlArray[call];
-        console.log(call);
+        kewl(urlArray[i]);
       }
-      console.log(namesArray[i]);
     }// End `For`
-
-    Request(call);
-  }// End `Next Function`
+  }
+  function kewl (x){
+    request(x, function(err, response, body){
+      var something = [];
+      if(!err && response.statusCode === 200){
+        var $ = cheerio.load(body);
+        $('a').each(function(){
+          var knames = $(this).text();
+          knames = knames.replace(/\r?\n|\r/g,"");
+          var klinks = $(this).attr('href');
+          something.push({
+            name:knames,
+            links:klinks
+          });
+        });
+        // namesArray.push(fullName);
+        // namesArray.sort();
+        // for(var k = 0; k<namesArray.length && k<urlArray.length; k++){
+        //   console.log(namesArray[k]);
+        //   console.log(urlArray[k]);
+        // }
+        for(var i = 0; i<something.length; i++){
+          console.log(something[i]);
+        }
+      }
+    })
+  }
 });// End `Get`
 
 module.exports = app;
