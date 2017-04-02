@@ -37,62 +37,43 @@ app.get('/searching', function(req,res){
   var firstChar = req.query.firstChar;
   var namesArray = [];
   var urlArray = [];
-  //something.push(lastName);
   var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
   console.log(url);
-  request(url, function(err, response, body){
-    if(!err && response.statusCode === 200){
-      var $ = cheerio.load(body);
-
-      $('a').each(function(i,k){
-        var names = $(this).text();
-        names = names.replace(/\r?\n|\r/g,"");
-         links = $(this).attr('href');
-        if(names === 'Home Page'){
-          names = '';
-          links = '';
-        }
-        if(names === 'Form N-400'){
-          names = '';
-          links = '';
-        }
-        namesArray.push(names);
-        urlArray.push(links);
-      });// End  `Each`
-      namesArray.push(lastName);
-      namesArray = namesArray.filter(Boolean);
-      namesArray.sort();
-      urlArray = urlArray.filter(Boolean);
-      Next(namesArray, urlArray);
-    }
-  });// End `Request`
-  function Next(namesArray, urlArray){
-    var something = [];
-    var somethingElse = [];
-    for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
-      if(namesArray[i] === lastName){
-        call = namesArray.indexOf(lastName);
-        call = urlArray[call - 1];
-      }
-    }
-    request(call, function(err, response, body){
+  /*
+    ~ Need a request function for names and urls
+    ~ Need a sort function to get new url
+  */
+  Request(url);
+  function Request(url){
+    request(url, function(err, response, body){
       if(!err && response.statusCode === 200){
         var $ = cheerio.load(body);
         $('a').each(function(i,k){
-           knames = $(this).text();
-           kurls = $(this).attr('href');
-          knames = knames.replace(/\r?\n|\r/g,"");
-          something.push(knames);
-        });//End `Each`
-        something.push(lastName);
-        something.sort();
+          names = $(this).text();
+          names = names.replace(/\r?\n|\r/g,"");
+          links = $(this).attr('href');
+
+          if(names === 'Home Page'){
+            names = '';
+            links = '';
+          }
+          if(names === 'Form N-400'){
+            names = '';
+            links = '';
+          }
+          namesArray.push(names);
+          urlArray.push(links);
+        });// End `Each`
+        namesArray.push(lastName);
+        Next(namesArray, urlArray);
       }
-      kNext(knames, kurls);
     });// End `Request`
+  }// End `Request Function`
+  function Next(namesArray, urlArray){
+    namesArray = namesArray.filter(Boolean);
+    namesArray.sort();
+    console.log(namesArray);
   }// End `Next Function`
-  function kNext(knames, kurls){
-    console.log(knames);
-  }
 });// End `Get`
 
 module.exports = app;
