@@ -52,19 +52,25 @@ app.get('/searching', function(req,res){
       var names = $(this).text();
       names = names.replace(/\r?\n|\r/g,"");
       var links = $(this).attr('href');
-      namesArray.push(names);
-      urlArray.push(links);
+      if(names === 'Form N-400' || names === 'Home Page'){
+
+      }else{
+        namesArray.push(names);
+        urlArray.push(links);
+      }
     });
     namesArray.push(fullName);
     namesArray.sort();
+
     for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
       if(namesArray[i] === fullName){
-        kewl(urlArray[i]);
+        kewl(urlArray[i - 1]);
       }
     }// End `For`
   }
   function kewl (x){
     request(x, function(err, response, body){
+      console.log(x);
       var something = [];
       var ksomething = [];
       if(!err && response.statusCode === 200){
@@ -83,16 +89,21 @@ app.get('/searching', function(req,res){
         });
         something.push(fullName);
         something.sort();
-        var index;
-        for(var i = 0; i<something.length; i++){
-          if(something[i] === fullName){
-            index = i;
-          }
-          console.log(something[i]);
-        }
-        for(var k = 0; k<ksomething.length; k++){
-          if(index === k){
-            console.log(ksomething[k]);
+        // var index;
+        // for(var i = 0; i<something.length; i++){
+        //   if(something[i] === fullName){
+        //     index = i;
+        //   }
+        //   console.log(something[i]);
+        // }
+        // for(var k = 0; k<ksomething.length; k++){
+        //   if(index === k){
+        //     console.log(ksomething[k]);
+        //   }
+        // }
+        for(var i = 0; i<something.length && i<ksomething.length; i++){
+          if(fullName === something[i]){
+            console.log(ksomething[i-1]);
           }
         }
       }
