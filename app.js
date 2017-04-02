@@ -35,13 +35,13 @@ app.get('/searching', function(req,res){
   var firstName = req.query.firstName;
   var lastName = req.query.lastName;
   var firstChar = req.query.firstChar;
+  var fullName = lastName+', '+firstName;
   var namesArray = [];
   var urlArray = [];
   var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
   console.log(url);
   /*
-    ~ Need a request function for names and urls
-    ~ Need a sort function to get new url
+    ~ Need to add first name for the last check
   */
   Request(url);
   function Request(url){
@@ -64,23 +64,30 @@ app.get('/searching', function(req,res){
           namesArray.push(names);
           urlArray.push(links);
         });// End `Each`
-        namesArray.push(lastName);
-        Next(namesArray, urlArray);
+        namesArray.push(fullName);
+        if(namesArray.length < 300){
+          Next(namesArray, urlArray);
+        }else{
+          console.log('We are at the last page');
+        }
+
       }
     });// End `Request`
   }// End `Request Function`
   function Next(namesArray, urlArray){
     namesArray = namesArray.filter(Boolean);
     namesArray.sort();
+    urlArray.sort();
     for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
-      if(namesArray[i] === lastName){
-        call = namesArray.indexOf(lastName);
+      if(namesArray[i] === fullName){
+        call = namesArray.indexOf(fullName);
         call = urlArray[call];
         console.log(call);
       }
+      console.log(namesArray[i]);
     }// End `For`
 
-  //  Request(call);
+    Request(call);
   }// End `Next Function`
 });// End `Get`
 
