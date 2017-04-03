@@ -89,13 +89,6 @@ app.get('/searching', function(req,res){
         });
         something.push(fullName);
         something.sort();
-
-        /*
-          ~ If a comma comes before a space
-
-        */
-
-
         for(var i = 0; i<something.length && i<ksomething.length; i++){
           // console.log(i, something[i]);
           // console.log(ksomething[i]);
@@ -106,9 +99,15 @@ app.get('/searching', function(req,res){
           var space = something[i].indexOf(' ');
           var comma = something[i].indexOf(', ');
           if(space < comma){
-            console.log(something[i]);
-          }
+            /*
+              ~ Better idea
+              ~ Compair till its false/true
+              ~ last name has to be equal
+            */
+            
 
+          }
+          console.log(something[i]);
 
         }
       }
