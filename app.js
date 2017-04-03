@@ -91,8 +91,8 @@ app.get('/searching', function(req,res){
         something.sort();
 
         /*
-          ~ Find last name comma
-          ~ vs last name last name comma
+          ~ If a comma comes before a space
+
         */
 
 
@@ -102,8 +102,13 @@ app.get('/searching', function(req,res){
           // if(fullName === something[i]){
           //   //console.log(ksomething[i-1]);
           // }
-          comp = something[i].includes(/,\s*/);
-          console.log(comp);
+          // comp = something[i].includes(/,\s*/);
+          var space = something[i].indexOf(' ');
+          var comma = something[i].indexOf(', ');
+          if(space < comma){
+            console.log(something[i]);
+          }
+
 
         }
       }
