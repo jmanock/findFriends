@@ -89,17 +89,22 @@ app.get('/searching', function(req,res){
         });
         something.push(fullName);
         something.sort();
+
         /*
-          ~ Found the bug
-          ~ Not stopping after the comma to sort
-          ~ Have to figure out a fix for comma to be at the top
+          ~ Find last name comma
+          ~ vs last name last name comma
         */
+
+
         for(var i = 0; i<something.length && i<ksomething.length; i++){
-          console.log(i, something[i]);
-          console.log(ksomething[i]);
-          if(fullName === something[i]){
-            //console.log(ksomething[i-1]);
-          }
+          // console.log(i, something[i]);
+          // console.log(ksomething[i]);
+          // if(fullName === something[i]){
+          //   //console.log(ksomething[i-1]);
+          // }
+          comp = something[i].includes(/,\s*/);
+          console.log(comp);
+
         }
       }
     })
