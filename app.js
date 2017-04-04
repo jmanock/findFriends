@@ -89,21 +89,27 @@ app.get('/searching', function(req,res){
         });
         something.push(fullName);
         something.sort();
+        var moves = [];
         for(var i = 0; i<something.length && i<ksomething.length; i++){
           var space = something[i].indexOf(' ');
           var comma = something[i].indexOf(', ');
           var kewls = something[i].slice(0,comma);
           var kewl = something[i].slice(0,space);
-          var moves = [];
+
 
           if(space < comma){
-            /*
-              ~ Need to move something[i] till this isnt true
-            */
-            
+            var ok = something[i+1].slice(0,something[i+1].indexOf(','));
+            if(kewl === ok){
+              var first = something[i];
+              var second = something[i+1];
+              first = second;
+              second = something[i];
+              moves.push(first,second);
+            }
           }
 
         }// End `For`
+        console.log(moves);
       }
     });
   }
