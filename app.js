@@ -90,24 +90,26 @@ app.get('/searching', function(req,res){
         something.push(fullName);
         something.sort();
         for(var i = 0; i<something.length && i<ksomething.length; i++){
-          // console.log(i, something[i]);
-          // console.log(ksomething[i]);
-          // if(fullName === something[i]){
-          //   //console.log(ksomething[i-1]);
-          // }
-          // comp = something[i].includes(/,\s*/);
           var space = something[i].indexOf(' ');
           var comma = something[i].indexOf(', ');
+          var kewls = something[i].slice(0,comma);
           if(space < comma){
             /*
-              ~ Compair last name vs space
-              ~ Move till its true/false
-              ~ if the string is equal all the way to the space vs comma
+              ~ Need to get out of this to grab the other index
+              ~
             */
-
-
+            var kwls = something[i+1].slice(0,comma);
+            var kewl = something[i].slice(0,space);
+            console.log(kewl[i+1]);
           }
-          console.log(something[i]);
+          //console.log(something[i]);
+
+
+          // while(space<comma){
+          //   something[i] = something[i+1];
+          //   console.log(something[i]);
+          // }
+          // console.log(something[i]);
 
         }
       }
