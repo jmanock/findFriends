@@ -93,27 +93,19 @@ app.get('/searching', function(req,res){
           var space = something[i].indexOf(' ');
           var comma = something[i].indexOf(', ');
           var kewls = something[i].slice(0,comma);
+          var kewl = something[i].slice(0,space);
+          var moves = [];
+
           if(space < comma){
             /*
-              ~ Need to get out of this to grab the other index
-              ~
+              ~ Need to move something[i] till this isnt true
             */
-            var kwls = something[i+1].slice(0,comma);
-            var kewl = something[i].slice(0,space);
-            console.log(kewl[i+1]);
+            
           }
-          //console.log(something[i]);
 
-
-          // while(space<comma){
-          //   something[i] = something[i+1];
-          //   console.log(something[i]);
-          // }
-          // console.log(something[i]);
-
-        }
+        }// End `For`
       }
-    })
+    });
   }
 });// End `Get`
 
