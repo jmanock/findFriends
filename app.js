@@ -100,11 +100,11 @@ app.get('/searching', function(req,res){
           var comma = something[i].indexOf(', ');
           if(space < comma){
             /*
-              ~ Better idea
-              ~ Compair till its false/true
-              ~ last name has to be equal
+              ~ Compair last name vs space
+              ~ Move till its true/false
+              ~ if the string is equal all the way to the space vs comma
             */
-            
+
 
           }
           console.log(something[i]);
