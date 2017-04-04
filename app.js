@@ -90,36 +90,26 @@ app.get('/searching', function(req,res){
         something.push(fullName);
         //something.sort();
         var moves = [];
-        console.log(something.length);
+
         for(var i = 0; i<something.length && i<ksomething.length; i++){
           var space = something[i].indexOf(' ');
           var comma = something[i].indexOf(', ');
           var kewls = something[i].slice(0,comma);
           var kewl = something[i].slice(0,space);
 
-          //console.log(something.indexOf(fullName));
-          console.log(i,something[i]);
-          console.log(something.length);
-          // if(space < comma){
-          //   console.log(something[i]);
-          // }
-          // if(space < comma){
-          //   var ok = something[i+1].slice(0,something[i+1].indexOf(','));
-          //   if(kewl === ok){
-          //     var first = something[i];
-          //     var second = something[i+1];
-          //     first = second;
-          //     second = something[i];
-          //     moves.push(first,second);
-          //   }
-          // }else{
-          //   moves.push(something[i]);
-          // }
+          /*
+            ~ Take the full name and find where it goes
+            ~ Without the sort function
+            ~ Should be easier
+          */
+          var s = firstName.charAt(0);
+
+        if(something[i].includes(lastName && s)){
+          console.log(i,'winner winner');
+        }
 
         }// End `For`
-        // for(var x = 0; x<moves.length; x++){
-        //   console.log(moves[x]);
-        // }
+
       }
     });
   }
