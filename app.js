@@ -106,10 +106,14 @@ app.get('/searching', function(req,res){
               second = something[i];
               moves.push(first,second);
             }
+          }else{
+            moves.push(something[i]);
           }
 
         }// End `For`
-        console.log(moves);
+        for(var x = 0; x<moves.length; x++){
+          console.log(moves[x]);
+        }
       }
     });
   }
