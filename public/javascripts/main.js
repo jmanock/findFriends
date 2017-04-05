@@ -14,7 +14,11 @@
         firstChar:firstChar
       };
       $.get('/searching', params, function(data){
-        console.log(data);
+        $(data).each(function(i,k){
+          //$('#results').append('<li><a href="#">'+data+'</a></li>');
+          console.log(data);
+        });
+        $('#results').append('<li><a href="#">'+data+'</a></li>');
       });// End `Get`
     }
   });// End `KeyUp`
