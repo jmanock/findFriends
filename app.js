@@ -55,8 +55,8 @@ app.get('/searching', function(req,res){
         var space = names.indexOf(' ');
         var comma = names.indexOf(', ');
 
-        if(names === 'Form N-400' || names === 'Home Page'){
-
+        if(names === 'Form N-400' || names === 'Home Page' || names === 'Fom N-400'){
+          //console.log(names);
         }else if(space < comma){
           names = names.replace(' ', '-');
           namesArray.push(names);
@@ -67,26 +67,39 @@ app.get('/searching', function(req,res){
         }
       });// End `each`
 
-      namesArray.push(fullName);
-      namesArray.sort();
+        // namesArray.push(fullName);
+        // namesArray.sort();
 
-      // Check length of array to see what page we are on
       if(namesArray.length > 300){
-        console.log('YO on the last page');
-      }else{
-        // Send to url function
+        // All Names page
+        console.log('Last Page');
+      }else if(namesArray.length < 100){
+        namesArray.push(fullName);
+        namesArray.sort();
         FindUrl(namesArray, urlArray);
+      }else{
+        namesArray.sort();
+        SortPage(namesArray, urlArray);
       }
-   }// End `Pages`
+   }// End `Pages Function`
 
    function FindUrl(namesArray, urlArray){
      for(var i = 0; i<namesArray.length && urlArray.length; i++){
+       //console.log(namesArray[i]);
        if(namesArray[i] === fullName){
          var nextPage = urlArray[i-1];
          Request(nextPage);
+         //NextPage(nextPage);
        }
      }
-   }
+   }// End `FindUrl Function`
+   function SortPage(namesArray, urlArray){
+     console.log(namesArray.length);
+     console.log(urlArray.length);
+     for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
+
+     }
+   }// End `SortPage Function`
 });// End `Get`
 
 module.exports = app;
