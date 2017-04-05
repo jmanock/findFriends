@@ -97,7 +97,7 @@ app.get('/searching', function(req,res){
           names = names.slice(25);
           names = names.toUpperCase();
           fName = firstName + ' '+lastName;
-          if(names.includes(fName)){
+          if(names.includes(firstName)){
             console.log(names);
           }
         }
