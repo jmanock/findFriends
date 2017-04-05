@@ -48,6 +48,8 @@ app.get('/searching', function(req,res){
 
    function Pages(body){
       var $ = cheerio.load(body);
+      urlArray = [];
+      namesArray = [];
       $('a').each(function(){
         var names = $(this).text();
         var links = $(this).attr('href');
@@ -67,19 +69,13 @@ app.get('/searching', function(req,res){
         }
       });// End `each`
 
-        // namesArray.push(fullName);
-        // namesArray.sort();
-
       if(namesArray.length > 300){
-        // All Names page
-        console.log('Last Page');
-      }else if(namesArray.length < 100){
+        // Send to the last page function
+          console.log('On to the last page');
+      }else{
         namesArray.push(fullName);
         namesArray.sort();
         FindUrl(namesArray, urlArray);
-      }else{
-        namesArray.sort();
-        SortPage(namesArray, urlArray);
       }
    }// End `Pages Function`
 
@@ -93,13 +89,6 @@ app.get('/searching', function(req,res){
        }
      }
    }// End `FindUrl Function`
-   function SortPage(namesArray, urlArray){
-     console.log(namesArray.length);
-     console.log(urlArray.length);
-     for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
-
-     }
-   }// End `SortPage Function`
 });// End `Get`
 
 module.exports = app;
