@@ -27,89 +27,66 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 
 app.get('/searching', function(req,res){
-  var firstName = req.query.firstName;
-  var lastName = req.query.lastName;
-  var firstChar = req.query.firstChar;
-  var fullName = lastName+', '+firstName;
-  var namesArray = [];
-  var urlArray = [];
-  var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
-  console.log(url);
+   var firstName = req.query.firstName;
+   var lastName = req.query.lastName;
+   var firstChar = req.query.firstChar;
+   var fullName = lastName+', '+firstName;
+   var namesArray = [];
+   var urlArray = [];
+   var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
 
-  request(url, function(err, response, body){
-    if(!err && response.statusCode === 200){
-      something(body);
-    }
-  });// End `request`
-  function something(body){
-    var $ = cheerio.load(body);
-    $('a').each(function(){
-      var names = $(this).text();
-      names = names.replace(/\r?\n|\r/g,"");
-      var links = $(this).attr('href');
-      if(names === 'Form N-400' || names === 'Home Page'){
+   Request(url);
 
-      }else{
-        namesArray.push(names);
-        urlArray.push(links);
-      }
-    });
-    namesArray.push(fullName);
-    namesArray.sort();
+   function Request(url){
+     console.log(url);
+     request(url, function(err, response, body){
+       if(!err && response.statusCode === 200){
+         Pages(body);
+       }
+     });// End `request`
+   }// End `Request`
 
-    for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
-      if(namesArray[i] === fullName){
-        kewl(urlArray[i - 1]);
-      }
-    }// End `For`
-  }
-  function kewl (x){
-    request(x, function(err, response, body){
-      console.log(x);
-      var something = [];
-      var ksomething = [];
-      if(!err && response.statusCode === 200){
-        var $ = cheerio.load(body);
-        $('a').each(function(){
-          var knames = $(this).text();
-          knames = knames.replace(/\r?\n|\r/g,"");
-          var klinks = $(this).attr('href');
-          if(knames === 'Form N-400' || knames === 'Home Page'){
+   function Pages(body){
+      var $ = cheerio.load(body);
+      $('a').each(function(){
+        var names = $(this).text();
+        var links = $(this).attr('href');
+        names = names.replace(/\r?\n|r/g,'');
+        var space = names.indexOf(' ');
+        var comma = names.indexOf(', ');
 
-          }else{
-            something.push(knames);
-            ksomething.push(klinks);
-          }
+        if(names === 'Form N-400' || names === 'Home Page'){
 
-        });
-        //something.push(fullName);
-        //something.sort();
-        var moves = [];
-
-        for(var i = 0; i<something.length; i++){
-          var space = something[i].indexOf(' ');
-          var comma = something[i].indexOf(', ');
-          // var kewls = something[i].slice(0,comma);
-          // var kewl = something[i].slice(0,space);
-
-          if(space < comma){
-            //Add a - should keep them in the same spot
-            var x = something[i].replace(' ','-');
-            moves.push(x);
-          }else{
-            moves.push(something[i]);
-          }
-
-        }// End `For`
-        moves.push(fullName);
-        moves.sort();
-        for(var j = 0; j<moves.length && j<ksomething.length; j++){
-          console.log(moves[j]);
-          console.log(ksomething[j]);
+        }else if(space < comma){
+          names = names.replace(' ', '-');
+          namesArray.push(names);
+          urlArray.push(links);
+        }else{
+          namesArray.push(names);
+          urlArray.push(links);
         }
+      });// End `each`
+
+      namesArray.push(fullName);
+      namesArray.sort();
+
+      // Check length of array to see what page we are on
+      if(namesArray.length > 300){
+        console.log('YO on the last page');
+      }else{
+        // Send to url function
+        FindUrl(namesArray, urlArray);
       }
-    });
-  }
+   }// End `Pages`
+
+   function FindUrl(namesArray, urlArray){
+     for(var i = 0; i<namesArray.length && urlArray.length; i++){
+       if(namesArray[i] === fullName){
+         var nextPage = urlArray[i-1];
+         Request(nextPage);
+       }
+     }
+   }
 });// End `Get`
 
 module.exports = app;
