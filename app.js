@@ -70,8 +70,7 @@ app.get('/searching', function(req,res){
       });// End `each`
 
       if(namesArray.length > 300){
-        // Send to the last page function
-          console.log('On to the last page');
+          LastPage(namesArray);
       }else{
         namesArray.push(fullName);
         namesArray.sort();
@@ -89,6 +88,19 @@ app.get('/searching', function(req,res){
        }
      }
    }// End `FindUrl Function`
+   function LastPage(namesArray){
+     for(var i = 0; i<namesArray.length; i++){
+        var names = namesArray[i];
+        if(names === 'eVeify Full Repot' || names === 'Pevious page' || names === 'Home page' || names === 'Next page'){
+
+        }else{
+          names = names.slice(25);
+          if(names.includes(firstName+' '+lastName)){
+            console.log(names);
+          }
+        }
+     }// End `For`
+   }// End `Last Page Function`
 });// End `Get`
 
 module.exports = app;
