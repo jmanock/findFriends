@@ -87,7 +87,7 @@ app.get('/searching', function(req,res){
           }
 
         });
-        something.push(fullName);
+        //something.push(fullName);
         //something.sort();
         var moves = [];
 
@@ -98,9 +98,8 @@ app.get('/searching', function(req,res){
           var kewl = something[i].slice(0,space);
 
           /*
-            ~ Take the full name and find where it goes
-            ~ Without the sort function
-            ~ Should be easier
+            ~ Push the full name in the array
+            ~ Do a custom sort 
           */
           var s = firstName.charAt(0);
 
