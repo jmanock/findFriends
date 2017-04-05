@@ -26,11 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 
-/*
-  ~ Split the name into first and last
-  ~ Load the url
-  ~ Request to the search
-*/
 app.get('/searching', function(req,res){
   var firstName = req.query.firstName;
   var lastName = req.query.lastName;
@@ -87,11 +82,11 @@ app.get('/searching', function(req,res){
           }
 
         });
-        something.push(fullName);
+        //something.push(fullName);
         //something.sort();
         var moves = [];
 
-        for(var i = 0; i<something.length && i<ksomething.length; i++){
+        for(var i = 0; i<something.length; i++){
           var space = something[i].indexOf(' ');
           var comma = something[i].indexOf(', ');
           // var kewls = something[i].slice(0,comma);
@@ -100,21 +95,18 @@ app.get('/searching', function(req,res){
           if(space < comma){
             //Add a - should keep them in the same spot
             var x = something[i].replace(' ','-');
-            something.push(x);
+            moves.push(x);
+          }else{
+            moves.push(something[i]);
           }
-          something.sort();
-          console.log(something[i]);
-
-        //
-        // if(something[i].includes(lastName)){
-        //   something.push(fullName);
-        //   var kewl = something[i].indexOf(' ... ');
-        //   var kewls = something[i].slice(0,kewl);
-        //
-        // }
 
         }// End `For`
-
+        moves.push(fullName);
+        moves.sort();
+        for(var j = 0; j<moves.length && j<ksomething.length; j++){
+          console.log(moves[j]);
+          console.log(ksomething[j]);
+        }
       }
     });
   }
