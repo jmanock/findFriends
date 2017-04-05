@@ -87,25 +87,31 @@ app.get('/searching', function(req,res){
           }
 
         });
-        //something.push(fullName);
+        something.push(fullName);
         //something.sort();
         var moves = [];
 
         for(var i = 0; i<something.length && i<ksomething.length; i++){
           var space = something[i].indexOf(' ');
           var comma = something[i].indexOf(', ');
-          var kewls = something[i].slice(0,comma);
-          var kewl = something[i].slice(0,space);
+          // var kewls = something[i].slice(0,comma);
+          // var kewl = something[i].slice(0,space);
 
-          /*
-            ~ Push the full name in the array
-            ~ Do a custom sort 
-          */
-          var s = firstName.charAt(0);
+          if(space < comma){
+            //Add a - should keep them in the same spot
+            var x = something[i].replace(' ','-');
+            something.push(x);
+          }
+          something.sort();
+          console.log(something[i]);
 
-        if(something[i].includes(lastName && s)){
-          console.log(i,'winner winner');
-        }
+        //
+        // if(something[i].includes(lastName)){
+        //   something.push(fullName);
+        //   var kewl = something[i].indexOf(' ... ');
+        //   var kewls = something[i].slice(0,kewl);
+        //
+        // }
 
         }// End `For`
 
