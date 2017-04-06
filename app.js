@@ -112,26 +112,38 @@ app.get('/searching', function(req,res){
    }// End `Last Page Function`
 
    function FinalPage(url){
-     var something = [];
+     var voterIdNumberArray = [];
+     var namesArray = [];
      request(url, function(err, response, body){
        if(!err && response.statusCode === 200){
          var $ = cheerio.load(body);
-         $('a').each(function(){
+         $('font a').each(function(){
            /*
-            ~ Try to get the text back between two a tags
+            ~ voter id back to last name
+            ~ voter id match to name
+            ~ not sure what to do with same name
            */
-           //var k = $(this).text();
-           var s = $(this).attr('target');
-           if(s !== 'undefined'){
-             something.push(s);
-           }
-           
-           //var s = $(this).prev().text();
+           var names = $(this).text();
 
-           //something.push(k);
+          if(names !== 'eVerify Full Report'){
+            if(names !== 'Home page'){
+              if(names !== 'Previous page'){
+                if(names !== 'Next page'){
+                  names = names.slice(27);
+                  namesArray.push(names);
+                }
+              }
+            }
+          }
+
+           var voterIdNumber = $(this).attr('target');
+           if(voterIdNumber !== undefined){
+             voterIdNumberArray.push(voterIdNumber);
+           }
          });// End `Each`
        }
-       console.log(something.length);
+       console.log(voterIdNumberArray.length);
+       console.log(namesArray.length);
      });// End `request`
 
    }// End `Final Page Function`
