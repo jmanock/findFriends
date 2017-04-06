@@ -118,15 +118,17 @@ app.get('/searching', function(req,res){
          var $ = cheerio.load(body);
          $('a').each(function(){
            /*
-            ~ Get the links
-            ~ Get the names
-            ~ search names vs links
-            ~ Get text back? 
+            ~ Try to get the text back between two a tags
            */
-           var k = $(this).text();
-           var s = $(this).prev().text();
+           //var k = $(this).text();
+           var s = $(this).attr('target');
+           if(s !== 'undefined'){
+             something.push(s);
+           }
+           
+           //var s = $(this).prev().text();
 
-           something.push(k);
+           //something.push(k);
          });// End `Each`
        }
        console.log(something.length);
