@@ -125,16 +125,18 @@ app.get('/searching', function(req,res){
            */
            var names = $(this).text();
 
-          if(names !== 'eVerify Full Report'){
-            if(names !== 'Home page'){
-              if(names !== 'Previous page'){
-                if(names !== 'Next page'){
-                  names = names.slice(27);
-                  namesArray.push(names);
+            if(names !== 'eVerify Full Report'){
+              if(names !== 'Home page'){
+                if(names !== 'Previous page'){
+                  if(names !== 'Next page'){
+                    names = names.slice(27);
+                    names = names.toUpperCase();
+                    namesArray.push(names);
+                  }
                 }
               }
             }
-          }
+
 
            var voterIdNumber = $(this).attr('target');
            if(voterIdNumber !== undefined){
@@ -142,8 +144,15 @@ app.get('/searching', function(req,res){
            }
          });// End `Each`
        }
-       console.log(voterIdNumberArray.length);
-       console.log(namesArray.length);
+      //  console.log(voterIdNumberArray.length);
+      //  console.log(namesArray.length);
+      for(var i = 0; i<voterIdNumberArray.length && i<namesArray.length; i++){
+        var fname = firstName +' '+lastName;
+        if(namesArray[i].includes(firstName)){
+          console.log(namesArray[i]);
+          console.log(voterIdNumberArray[i]);
+        }
+      }
      });// End `request`
 
    }// End `Final Page Function`
