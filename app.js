@@ -118,11 +118,6 @@ app.get('/searching', function(req,res){
        if(!err && response.statusCode === 200){
          var $ = cheerio.load(body);
          $('font a').each(function(){
-           /*
-            ~ voter id back to last name
-            ~ voter id match to name
-            ~ not sure what to do with same name
-           */
            var names = $(this).text();
 
             if(names !== 'eVerify Full Report'){
@@ -136,21 +131,22 @@ app.get('/searching', function(req,res){
                 }
               }
             }
-
-
            var voterIdNumber = $(this).attr('target');
            if(voterIdNumber !== undefined){
              voterIdNumberArray.push(voterIdNumber);
            }
          });// End `Each`
        }
-      //  console.log(voterIdNumberArray.length);
-      //  console.log(namesArray.length);
+
       for(var i = 0; i<voterIdNumberArray.length && i<namesArray.length; i++){
         var fname = firstName +' '+lastName;
         if(namesArray[i].includes(firstName)){
-          console.log(namesArray[i]);
-          console.log(voterIdNumberArray[i]);
+          var voterId = voterIdNumberArray[i];
+          /*
+            ~ Need to find the voter id on the page
+            ~ Return all text with it
+          */
+
         }
       }
      });// End `request`
