@@ -70,7 +70,8 @@ app.get('/searching', function(req,res){
       });// End `each`
 
       if(namesArray.length > 300){
-          LastPage(namesArray, urlArray);
+          //LastPage(namesArray, urlArray);
+          tests(namesArray, urlArray);
       }else{
         namesArray.push(fullName);
         namesArray.sort();
@@ -78,16 +79,20 @@ app.get('/searching', function(req,res){
       }
    }// End `Pages Function`
 
-   function FindUrl(namesArray, urlArray){
-     for(var i = 0; i<namesArray.length && urlArray.length; i++){
-       //console.log(namesArray[i]);
-       if(namesArray[i] === fullName){
-         var nextPage = urlArray[i-1];
-         Request(nextPage);
-         //NextPage(nextPage);
-       }
-     }
-   }// End `FindUrl Function`
+
+    function FindUrl(namesArray, urlArray){
+      for(var i = 0; i<namesArray.length && urlArray.length; i++){
+        if(namesArray[i] === fullName){
+          var nextPage = urlArray[i-1];
+          if(namesArray.length < 200){
+            Request(nextPage);
+          }else{
+            FinalPage(nextPage);
+          }
+        }
+      }// End `For Loop`
+    }// End `Find Url Function`
+    
    function LastPage(namesArray, urlArray){
      var something = [];
      for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
@@ -99,19 +104,20 @@ app.get('/searching', function(req,res){
           names = names.toUpperCase();
           fName = firstName + ' '+lastName;
           if(names.includes(firstName)){
-            // something.push(names);
+            // Send Names back
             console.log(names);
-            console.log(urlArray[i]);
+
           }
         }
      }// End `For`
      //console.log(something);
      //res.send(something);
-     /*
-      ~ Open up links to show info
-      ~ Return names with info??
-     */
+
    }// End `Last Page Function`
+   function FinalPage(url){
+     console.log('url:',url);
+   }
+
 });// End `Get`
 
 module.exports = app;
