@@ -79,20 +79,19 @@ app.get('/searching', function(req,res){
       }
    }// End `Pages Function`
 
-
-    function FindUrl(namesArray, urlArray){
-      for(var i = 0; i<namesArray.length && urlArray.length; i++){
-        if(namesArray[i] === fullName){
-          var nextPage = urlArray[i-1];
-          if(namesArray.length < 200){
-            Request(nextPage);
-          }else{
-            FinalPage(nextPage);
-          }
+  function FindUrl(namesArray, urlArray){
+    for(var i = 0; i<namesArray.length && urlArray.length; i++){
+      if(namesArray[i] === fullName){
+        var nextPage = urlArray[i-1];
+        if(namesArray.length < 200){
+          Request(nextPage);
+        }else{
+          FinalPage(nextPage);
         }
-      }// End `For Loop`
-    }// End `Find Url Function`
-    
+      }
+    }// End `For Loop`
+  }// End `Find Url Function`
+
    function LastPage(namesArray, urlArray){
      var something = [];
      for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
@@ -110,13 +109,30 @@ app.get('/searching', function(req,res){
           }
         }
      }// End `For`
-     //console.log(something);
-     //res.send(something);
-
    }// End `Last Page Function`
+
    function FinalPage(url){
-     console.log('url:',url);
-   }
+     var something = [];
+     request(url, function(err, response, body){
+       if(!err && response.statusCode === 200){
+         var $ = cheerio.load(body);
+         $('a').each(function(){
+           /*
+            ~ Get the links
+            ~ Get the names
+            ~ search names vs links
+            ~ Get text back? 
+           */
+           var k = $(this).text();
+           var s = $(this).prev().text();
+
+           something.push(k);
+         });// End `Each`
+       }
+       console.log(something.length);
+     });// End `request`
+
+   }// End `Final Page Function`
 
 });// End `Get`
 
