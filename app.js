@@ -146,6 +146,15 @@ app.get('/searching', function(req,res){
             ~ Need to find the voter id on the page
             ~ Return all text with it
           */
+          var texts = $('td').text();
+          $('br').each(function(){
+            var something = $(this).prev();
+            console.log(something);
+          });
+          // if(texts.includes(voterId)){
+          //   var something = $(texts).childNodes[177].nodeValue;
+          //   console.log(something);
+          // }
 
         }
       }
