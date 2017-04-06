@@ -70,7 +70,7 @@ app.get('/searching', function(req,res){
       });// End `each`
 
       if(namesArray.length > 300){
-          LastPage(namesArray);
+          LastPage(namesArray, urlArray);
       }else{
         namesArray.push(fullName);
         namesArray.sort();
@@ -88,9 +88,9 @@ app.get('/searching', function(req,res){
        }
      }
    }// End `FindUrl Function`
-   function LastPage(namesArray){
+   function LastPage(namesArray, urlArray){
      var something = [];
-     for(var i = 0; i<namesArray.length; i++){
+     for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
         var names = namesArray[i];
         if(names === 'eVeify Full Repot' || names === 'Pevious page' || names === 'Home page' || names === 'Next page'){
 
@@ -99,12 +99,18 @@ app.get('/searching', function(req,res){
           names = names.toUpperCase();
           fName = firstName + ' '+lastName;
           if(names.includes(firstName)){
-            something.push(names);
+            // something.push(names);
+            console.log(names);
+            console.log(urlArray[i]);
           }
         }
      }// End `For`
-     console.log(something);
-     res.send(something);
+     //console.log(something);
+     //res.send(something);
+     /*
+      ~ Open up links to show info
+      ~ Return names with info??
+     */
    }// End `Last Page Function`
 });// End `Get`
 
