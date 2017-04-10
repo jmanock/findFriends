@@ -146,9 +146,12 @@ app.get('/searching', function(req,res){
           var texts = $('td').text();
           if(texts.includes(voterId) && texts.includes(lastName +', '+firstName)){
             var Find = $(texts).find(voterId);
-            var something = $(body).html();
-            var x = something.match(/107680562/g).text();
-            console.log(x);
+            var something = $(body).text();
+            // var x = something.match(/107680562/g);
+            var x = something.search(/107680562/i);
+            console.log(something.slice(64400,x));
+            var j = 'Fernandez, Brandon was born 1 October 1993 and he registered to vote using the address 3208 SW 143Rd Pl in Miami, Miami-Dade County, Florida, U.S.A. (Voter ID number';
+
             /*
               ~ Need to return name threw voter id
               ~ How???
