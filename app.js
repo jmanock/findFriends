@@ -142,20 +142,15 @@ app.get('/searching', function(req,res){
         var fname = firstName +' '+lastName;
         if(namesArray[i].includes(firstName)){
           var voterId = voterIdNumberArray[i];
-          /*
-            ~ Need to find the voter id on the page
-            ~ Return some text in between two br
-          */
           var texts = $('td').text();
-          $('br').each(function(){
-            var something = $(this).prev();
-            console.log(something);
-          });
-          // if(texts.includes(voterId)){
-          //   var something = $(texts).childNodes[177].nodeValue;
-          //   console.log(something);
-          // }
-
+          if(texts.includes(voterId)){
+            /*
+              ~ Need to return name threw voter id
+              ~ How???
+            */
+          }// End `If`
+          var something = $('br').length;
+          console.log(something);
         }
       }
      });// End `request`
