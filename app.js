@@ -146,10 +146,13 @@ app.get('/searching', function(req,res){
           var texts = $('td').text();
           if(texts.includes(voterId) && texts.includes(lastName +', '+firstName)){
 
-            var something = $(body).html();
-            //var x = /voterId/.exec(something);
-            var re = new RegExp(voterId,'g');
-            console.log(re.exec(something));
+            // var something = $(body).html();
+            // var re = new RegExp(voterId,'g');
+            var name = texts.indexOf(lastName+', '+firstName);
+            var number = texts.indexOf(voterId);
+            var kend = texts.slice(name,number);
+            console.log(kend);
+
           }// End `If`
 
         }
