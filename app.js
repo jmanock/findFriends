@@ -138,27 +138,27 @@ app.get('/searching', function(req,res){
            }
          });// End `Each`
        }
-
+       var fNames = [];
+       var fVoterId = [];
       for(var i = 0; i<voterIdNumberArray.length && i<namesArray.length; i++){
-        var fname = firstName +' '+lastName;
         if(namesArray[i].includes(firstName)){
-          var voterId = voterIdNumberArray[i];
-          var texts = $('td').text();
-          if(texts.includes(voterId) && texts.includes(lastName +', '+firstName)){
-
-            // var something = $(body).html();
-            // var re = new RegExp(voterId,'g');
-            var name = texts.indexOf(lastName+', '+firstName);
-            var number = texts.indexOf(voterId);
-            var kend = texts.slice(name,number);
-            console.log(kend);
-
-          }// End `If`
-
+          var page = $('font').text();
+          if(page.includes(voterIdNumberArray[i])&&page.includes(lastName+', '+firstName)){
+            /*
+              ~ Need to do the next step one at a time not all at once
+              ~ Maybe send to a function?
+              ~ Put into an array and do it that way
+              ~ Ideas
+            */
+            var name = page.indexOf(lastName+', '+firstName);
+            var number = page.indexOf(voterIdNumberArray[i]);
+            var final = page.slice(name,number);
+            console.log(final);
+          }
         }
-      }
-     });// End `request`
+      }// End `For`
 
+     });// End `request`
    }// End `Final Page Function`
 
 });// End `Get`
