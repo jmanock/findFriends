@@ -117,6 +117,7 @@ app.get('/searching', function(req,res){
      request(url, function(err, response, body){
        if(!err && response.statusCode === 200){
          var $ = cheerio.load(body);
+
          $('font a').each(function(){
            var names = $(this).text();
 
@@ -143,14 +144,17 @@ app.get('/searching', function(req,res){
         if(namesArray[i].includes(firstName)){
           var voterId = voterIdNumberArray[i];
           var texts = $('td').text();
-          if(texts.includes(voterId)){
+          if(texts.includes(voterId) && texts.includes(lastName +', '+firstName)){
+            var Find = $(texts).find(voterId);
+            var something = $(body).html();
+            var x = something.match(/107680562/g).text();
+            console.log(x);
             /*
               ~ Need to return name threw voter id
               ~ How???
             */
           }// End `If`
-          var something = $('br').length;
-          console.log(something);
+
         }
       }
      });// End `request`
