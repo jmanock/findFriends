@@ -144,7 +144,7 @@ app.get('/searching', function(req,res){
           var voterId = voterIdNumberArray[i];
           /*
             ~ Need to find the voter id on the page
-            ~ Return all text with it
+            ~ Return some text in between two br
           */
           var texts = $('td').text();
           $('br').each(function(){
