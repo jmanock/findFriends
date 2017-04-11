@@ -145,22 +145,26 @@ app.get('/searching', function(req,res){
         var page = $('font').text();
         if(namesArray[i].includes(firstName)){
           /*
-            ~ Should be a better way to do this
-            ~ Index doesnt work with more than one match
-            ~ Maybe if two matches one at a time?
+
           */
           if(page.includes(voterIdNumberArray[i]) && page.includes(lastName + ', '+firstName)){
-            // This matches the name and the id number
-            // Returns the text but only for one name
-            // Could have different instances of `page`?
+            var name = page.indexOf(lastName+', '+firstName);
+            var number = page.indexOf(voterIdNumberArray[i]);
+            var outs = page.slice(name, number);
+            fNames.push({
+              name:namesArray[i],
+              id:voterIdNumberArray[i],
+              url:url
+            });
           }
 
           //     var name = page.indexOf(lastName+', '+firstName);
           //     var number = page.indexOf(voterIdNumberArray[i]);
           //     var outs = page.slice(name, number);
         }
+        console.log(url);
       }// End `For`
-
+      res.send(fNames);
      });// End `request`
    }// End `Final Page Function`
 });// End `Get`

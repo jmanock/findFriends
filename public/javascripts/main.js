@@ -19,7 +19,10 @@
         firstChar:firstChar
       };
       $.get('/searching', params, function(data){
-        $('#results').append('<li><a href="#">'+data+'</a></li>');
+        if(data instanceof Array){
+          // for each over 1
+          console.log(data.length);
+        }
       });// End `Get`
     }
   });// End `KeyUp`
