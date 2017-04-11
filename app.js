@@ -140,20 +140,21 @@ app.get('/searching', function(req,res){
        }
        var fNames = [];
        var fVoterId = [];
+       var count = 0;
       for(var i = 0; i<voterIdNumberArray.length && i<namesArray.length; i++){
         if(namesArray[i].includes(firstName)){
+          // Maybe a counter?
+          count++;
+          console.log(namesArray[i], count);
           var page = $('font').text();
           if(page.includes(voterIdNumberArray[i])&&page.includes(lastName+', '+firstName)){
             /*
-              ~ Need to do the next step one at a time not all at once
-              ~ Maybe send to a function?
-              ~ Put into an array and do it that way
-              ~ Ideas
+              ~ Have to find out if there are more than one name
             */
             var name = page.indexOf(lastName+', '+firstName);
             var number = page.indexOf(voterIdNumberArray[i]);
             var final = page.slice(name,number);
-            console.log(final);
+            //console.log(final);
           }
         }
       }// End `For`
