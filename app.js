@@ -144,29 +144,23 @@ app.get('/searching', function(req,res){
       for(var i = 0; i<voterIdNumberArray.length && i<namesArray.length; i++){
         var page = $('font').text();
         if(namesArray[i].includes(firstName)){
-          /*
-
-          */
           if(page.includes(voterIdNumberArray[i]) && page.includes(lastName + ', '+firstName)){
-            var name = page.indexOf(lastName+', '+firstName);
-            var number = page.indexOf(voterIdNumberArray[i]);
-            var outs = page.slice(name, number);
             fNames.push({
               name:namesArray[i],
               id:voterIdNumberArray[i],
               url:url
             });
           }
-
-          //     var name = page.indexOf(lastName+', '+firstName);
-          //     var number = page.indexOf(voterIdNumberArray[i]);
-          //     var outs = page.slice(name, number);
         }
-        console.log(url);
       }// End `For`
       res.send(fNames);
      });// End `request`
    }// End `Final Page Function`
-});// End `Get`
+});// End `Get Searching`
+
+app.get('/results', function(req, res){
+  
+});// End `Get Results`
+
 
 module.exports = app;

@@ -12,6 +12,7 @@
         ~ Return more info
         ~ Loader
         ~ Clear text after enter
+        ~ look for a space
       */
       var params = {
         firstName:firstName,
@@ -21,9 +22,18 @@
       $.get('/searching', params, function(data){
         if(data instanceof Array){
           // for each over 1
-          console.log(data.length);
+          for(var i = 0; i<data.length; i++){
+            $('#results').append('<li><a href="#">'+data[i].name+'</a>'+data[i].id+'</li>');
+          }
         }
-      });// End `Get`
+        $('#results').on('click', function(){
+          console.log(this);
+        });
+        // $.get('/results', paramers, function(data){
+        //
+        // });// End `Get Results`
+      });// End `Get Searching`
     }
   });// End `KeyUp`
+
 })();
