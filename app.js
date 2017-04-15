@@ -114,13 +114,14 @@ app.get('/searching', function(req,res){
    function FinalPage(url){
      var voterIdNumberArray = [];
      var namesArray = [];
+     var urlArray = [];
      request(url, function(err, response, body){
        if(!err && response.statusCode === 200){
          var $ = cheerio.load(body);
 
          $('font a').each(function(){
            var names = $(this).text();
-
+           var url = $(this).attr('href');
             if(names !== 'eVerify Full Report'){
               if(names !== 'Home page'){
                 if(names !== 'Previous page'){
@@ -128,6 +129,7 @@ app.get('/searching', function(req,res){
                     names = names.slice(27);
                     names = names.toUpperCase();
                     namesArray.push(names);
+                    urlArray.push(url);
                   }
                 }
               }
@@ -140,22 +142,16 @@ app.get('/searching', function(req,res){
        }
        var fNames = [];
        var fVoterId = [];
-       var count = 0;
-      for(var i = 0; i<voterIdNumberArray.length && i<namesArray.length; i++){
-        var page = $('font').text();
-        if(namesArray[i].includes(firstName)){
-          // Better idea send back the link page of results
-          if(page.includes(voterIdNumberArray[i]) && page.includes(lastName + ', '+firstName)){
-            fNames.push({
-              name:namesArray[i],
-              id:voterIdNumberArray[i],
-              url:url
-            });
-          }
-        }
-      }// End `For`
-      console.log(fNames);
-      res.send(fNames);
+       for(var i = 0; i<namesArray.length && urlArray.length; i++){
+         var page = $('font').text();
+         if(namesArray[i].includes(firstName)){
+           fNames.push({
+             name:namesArray[i],
+             url:urlArray[i]
+           });
+         }
+       }// End `For Function`
+       res.send(fNames);
      });// End `request`
    }// End `Final Page Function`
 });// End `Get Searching`
