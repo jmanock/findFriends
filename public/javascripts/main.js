@@ -23,7 +23,7 @@
         if(data instanceof Array){
           // for each over 1
           for(var i = 0; i<data.length; i++){
-            $('#results').append('<li><a href="#">'+data[i].name+'</a>'+data[i].id+'</li>');
+            $('#results').append('<li><a href='+data[i].url+'>'+data[i].name+'</a></li>');
           }
         }
         $('#results').on('click', function(){

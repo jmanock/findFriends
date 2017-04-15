@@ -154,6 +154,7 @@ app.get('/searching', function(req,res){
           }
         }
       }// End `For`
+      console.log(fNames);
       res.send(fNames);
      });// End `request`
    }// End `Final Page Function`
