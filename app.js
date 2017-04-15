@@ -144,6 +144,7 @@ app.get('/searching', function(req,res){
       for(var i = 0; i<voterIdNumberArray.length && i<namesArray.length; i++){
         var page = $('font').text();
         if(namesArray[i].includes(firstName)){
+          // Better idea send back the link page of results
           if(page.includes(voterIdNumberArray[i]) && page.includes(lastName + ', '+firstName)){
             fNames.push({
               name:namesArray[i],
@@ -159,7 +160,7 @@ app.get('/searching', function(req,res){
 });// End `Get Searching`
 
 app.get('/results', function(req, res){
-  
+
 });// End `Get Results`
 
 
