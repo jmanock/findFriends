@@ -27,140 +27,69 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 
 app.get('/searching', function(req,res){
-   var firstName = req.query.firstName;
-   var lastName = req.query.lastName;
-   var firstChar = req.query.firstChar;
-   var fullName = lastName+', '+firstName;
-   var namesArray = [];
-   var urlArray = [];
-   var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
+  var firstName = req.query.firstName;
+  var lastName = req.query.lastName;
+  var firstChar = req.query.firstChar;
+  var fullName = lastName + ', '+firstName;
+  var namesArray = [];
+  var urlArray = [];
+  var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
 
-   Request(url);
+  Request(url);
 
-   function Request(url){
-     console.log(url);
-     request(url, function(err, response, body){
-       if(!err && response.statusCode === 200){
-         Pages(body);
-       }
-     });// End `request`
-   }// End `Request`
-
-   function Pages(body){
-      var $ = cheerio.load(body);
-      urlArray = [];
-      namesArray = [];
-      $('a').each(function(){
-        var names = $(this).text();
-        var links = $(this).attr('href');
-        names = names.replace(/\r?\n|r/g,'');
-        var space = names.indexOf(' ');
-        var comma = names.indexOf(', ');
-
-        if(names === 'Form N-400' || names === 'Home Page' || names === 'Fom N-400'){
-          //console.log(names);
-        }else if(space < comma){
-          names = names.replace(' ', '-');
-          namesArray.push(names);
-          urlArray.push(links);
-        }else{
-          namesArray.push(names);
-          urlArray.push(links);
-        }
-      });// End `each`
-
-      if(namesArray.length > 300){
-          //LastPage(namesArray, urlArray);
-          tests(namesArray, urlArray);
-      }else{
-        namesArray.push(fullName);
-        namesArray.sort();
-        FindUrl(namesArray, urlArray);
+  function Request(url){
+    console.log(url);
+    request(url, function(err, response, body){
+      if(!err && response.statusCode === 200){
+        Pages(body);
       }
-   }// End `Pages Function`
+    });
+  }// End `Request`
+
+  function Pages(body){
+    var $ = cheerio.load(body);
+    $('a').each(function(){
+      var names = $(this).text();
+      var links = $(this).attr('href');
+      names = names.replace(/\r?\n|r/g,'');
+      var space = names.indexOf(' ');
+      var comma = names.indexOf(', ');
+
+      if(names === 'Form N-400' || names === 'Home Page' || names === 'Fom N-400'){
+
+      }else if(space < comma){
+        names = names.replace(' ', '-');
+        namesArray.push(names);
+        urlArray.push(links);
+      }else{
+        namesArray.push(names);
+        urlArray.push(links);
+      }
+    });// End `each`
+
+    if(namesArray.length < 199){
+      namesArray.push(fullName);
+      namesArray.sort();
+      FindUrl(namesArray, urlArray);
+    }else{
+      LastPage(namesArray, urlArray);
+    }
+  }// End `Pages`
 
   function FindUrl(namesArray, urlArray){
     for(var i = 0; i<namesArray.length && urlArray.length; i++){
       if(namesArray[i] === fullName){
         var nextPage = urlArray[i-1];
-        if(namesArray.length < 200){
-          Request(nextPage);
-        }else{
-          FinalPage(nextPage);
-        }
+        Request(nextPage);
       }
-    }// End `For Loop`
-  }// End `Find Url Function`
+    }
+  }// End `FindUrl`
 
-   function LastPage(namesArray, urlArray){
-     var something = [];
-     for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
-        var names = namesArray[i];
-        if(names === 'eVeify Full Repot' || names === 'Pevious page' || names === 'Home page' || names === 'Next page'){
-
-        }else{
-          names = names.slice(25);
-          names = names.toUpperCase();
-          fName = firstName + ' '+lastName;
-          if(names.includes(firstName)){
-            // Send Names back
-            console.log(names);
-
-          }
-        }
-     }// End `For`
-   }// End `Last Page Function`
-
-   function FinalPage(url){
-     console.log(url);
-     var voterIdNumberArray = [];
-     var namesArray = [];
-     var urlArray = [];
-     request(url, function(err, response, body){
-       if(!err && response.statusCode === 200){
-         var $ = cheerio.load(body);
-
-         $('font a').each(function(){
-           var names = $(this).text();
-           var url = $(this).attr('href');
-            if(names !== 'eVerify Full Report'){
-              if(names !== 'Home page'){
-                if(names !== 'Previous page'){
-                  if(names !== 'Next page'){
-                    names = names.slice(27);
-                    names = names.toUpperCase();
-                    namesArray.push(names);
-                    urlArray.push(url);
-                  }
-                }
-              }
-            }
-           var voterIdNumber = $(this).attr('target');
-           if(voterIdNumber !== undefined){
-             voterIdNumberArray.push(voterIdNumber);
-           }
-         });// End `Each`
-       }
-       var fNames = [];
-       var fVoterId = [];
-       for(var i = 0; i<namesArray.length && urlArray.length; i++){
-         var page = $('font').text();
-         if(namesArray[i].includes(firstName)){
-           fNames.push({
-             name:namesArray[i],
-             url:urlArray[i]
-           });
-         }
-       }// End `For Function`
-
-       res.send(fNames);
-     });// End `request`
-   }// End `Final Page Function`
+  function LastPage(namesArray, urlArray){
+    for(var i = 0; i<namesArray.length; i++){
+      // console.log(namesArray[i]);
+    }
+  }
 });// End `Get Searching`
-
-app.get('/results', function(req, res){
-
-});// End `Get Results`
-
 
 module.exports = app;
