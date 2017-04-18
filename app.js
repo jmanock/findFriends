@@ -112,6 +112,7 @@ app.get('/searching', function(req,res){
    }// End `Last Page Function`
 
    function FinalPage(url){
+     console.log(url);
      var voterIdNumberArray = [];
      var namesArray = [];
      var urlArray = [];
@@ -151,6 +152,7 @@ app.get('/searching', function(req,res){
            });
          }
        }// End `For Function`
+
        res.send(fNames);
      });// End `request`
    }// End `Final Page Function`
