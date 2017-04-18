@@ -90,32 +90,34 @@ app.get('/searching', function(req,res){
   function LastPage(namesArray, urlArray){
     for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
       var url = urlArray[i];
-      something(url);
+      RunSearch(url);
     }
   }// End `LastPage`
 
-  function something(url){
+  function RunSearch(url){
+    var finalResults = [];
     request(url, function(err, response, body){
       if(!err && response.statusCode === 200){
-        console.log(url);
+        //console.log(url);
         var $ = cheerio.load(body);
         $('a').each(function(){
           var names = $(this).text();
-          if(names == 'eVerify Full Repoer' || names === 'Previous page' || names === 'Home page' || names === 'Next page'){
+          var links = $(this).attr('href');
+          if(names === 'eVerify Full Report' || names === 'Previous page' || names === 'Next page' || names === 'Home page'){
 
           }else{
             names = names.slice(27).toUpperCase();
-            var knames = firstName+' '+lastName;
-            console.log(knames);
-            console.log(names);
-            if(knames === names){
-              console.log('Found the fucking name');
+            if(names.includes(firstName) && names.includes(lastName)){
+              console.log(names, links);
             }
           }
-        });
+        });// End `each`
+
       }
-    });
-  }
+
+    });// End `request`
+
+  }// End `RunSearch`
 });// End `Get Searching`
 
 module.exports = app;
