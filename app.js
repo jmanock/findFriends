@@ -108,16 +108,21 @@ app.get('/searching', function(req,res){
           }else{
             names = names.slice(27).toUpperCase();
             if(names.includes(firstName) && names.includes(lastName)){
-              console.log(names, links);
+              FinalResults(names, links);
             }
           }
         });// End `each`
-
       }
-
     });// End `request`
-
   }// End `RunSearch`
+  function FinalResults(name, link){
+    var finalResults = [];
+    finalResults.push({
+      name:name,
+      url:link
+    });
+    console.log(finalResults);
+  }// End `FinalResults`
 });// End `Get Searching`
 
 module.exports = app;
