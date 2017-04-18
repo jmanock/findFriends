@@ -31,8 +31,6 @@ app.get('/searching', function(req,res){
   var lastName = req.query.lastName;
   var firstChar = req.query.firstChar;
   var fullName = lastName + ', '+firstName;
-  var namesArray = [];
-  var urlArray = [];
   var url = 'https://flvoters.com/by_name/index_pages/'+firstChar+'.html';
 
   Request(url);
@@ -47,6 +45,8 @@ app.get('/searching', function(req,res){
   }// End `Request`
 
   function Pages(body){
+    var namesArray = [];
+    var urlArray = [];
     var $ = cheerio.load(body);
     $('a').each(function(){
       var names = $(this).text();
@@ -58,7 +58,7 @@ app.get('/searching', function(req,res){
       if(names === 'Form N-400' || names === 'Home Page' || names === 'Fom N-400'){
 
       }else if(space < comma){
-        names = names.replace(' ', '-');
+        //names = names.replace(' ', '-');
         namesArray.push(names);
         urlArray.push(links);
       }else{
@@ -72,6 +72,8 @@ app.get('/searching', function(req,res){
       namesArray.sort();
       FindUrl(namesArray, urlArray);
     }else{
+      namesArray.push(fullName);
+      // namesArray.sort();
       LastPage(namesArray, urlArray);
     }
   }// End `Pages`
@@ -86,9 +88,24 @@ app.get('/searching', function(req,res){
   }// End `FindUrl`
 
   function LastPage(namesArray, urlArray){
-    for(var i = 0; i<namesArray.length; i++){
-      // console.log(namesArray[i]);
+    for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
+      var url = urlArray[i];
+      something(url);
     }
+  }// End `LastPage`
+
+  function something(url){
+    request(url, function(err, response, body){
+      if(!err && response.statusCode === 200){
+        console.log(url);
+        var $ = cheerio.load(body);
+        $('a').each(function(){
+          var names = $(this).text();
+          var knames = firstName+' '+lastName;
+          console.log(knames, names)
+        });
+      }
+    });
   }
 });// End `Get Searching`
 
