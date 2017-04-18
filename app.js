@@ -101,8 +101,17 @@ app.get('/searching', function(req,res){
         var $ = cheerio.load(body);
         $('a').each(function(){
           var names = $(this).text();
-          var knames = firstName+' '+lastName;
-          console.log(knames, names)
+          if(names == 'eVerify Full Repoer' || names === 'Previous page' || names === 'Home page' || names === 'Next page'){
+
+          }else{
+            names = names.slice(27).toUpperCase();
+            var knames = firstName+' '+lastName;
+            console.log(knames);
+            console.log(names);
+            if(knames === names){
+              console.log('Found the fucking name');
+            }
+          }
         });
       }
     });
