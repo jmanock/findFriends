@@ -19,11 +19,12 @@
         firstChar:firstChar
       };
       $.get('/searching', params, function(data){
-        if(data instanceof Array){
-          for(var i = 0; i<data.length; i++){
-            $('#results').append('<li><a href='+data[i].url+' target="_blank">'+data[i].name+'</a></li>');
-          }
-        }
+        // if(data instanceof Array){
+        //   for(var i = 0; i<data.length; i++){
+        //     $('#results').append('<li><a href='+data[i].url+' target="_blank">'+data[i].name+'</a></li>');
+        //   }
+        // }
+        console.log(data);
       });// End `Get Searching`
     }
   });// End `KeyUp`

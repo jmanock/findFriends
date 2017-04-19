@@ -95,8 +95,9 @@ app.get('/searching', function(req,res){
   }// End `LastPage`
 
   function RunSearch(url){
-    var finalResults = [];
+
     request(url, function(err, response, body){
+      var finalResults = [];
       if(!err && response.statusCode === 200){
         //console.log(url);
         var $ = cheerio.load(body);
@@ -108,16 +109,22 @@ app.get('/searching', function(req,res){
           }else{
             names = names.slice(27).toUpperCase();
             if(names.includes(firstName) && names.includes(lastName)){
-              FinalResults(names, links);
+              finalResults.push({
+                name:names,
+                ulr:links
+              });
+
             }
           }
+          //FinalResults(finalResults);
+
         });// End `each`
+        console.log(finalResults);
       }
     });// End `request`
   }// End `RunSearch`
-  function FinalResults(name, link){
-
-    
+  function FinalResults(fR){
+    //console.log(fR);
   }// End `FinalResults`
 });// End `Get Searching`
 
