@@ -72,7 +72,6 @@ app.get('/searching', function(req,res){
       namesArray.sort();
       FindUrl(namesArray, urlArray);
     }else{
-      namesArray.push(fullName);
       // namesArray.sort();
       LastPage(namesArray, urlArray);
     }
@@ -88,11 +87,20 @@ app.get('/searching', function(req,res){
   }// End `FindUrl`
 
   function LastPage(namesArray, urlArray){
-    console.log(urlArray.length);
+    /*
+      ~ Maybe a while loop
+      ~ Stop once something is found?
+    */
+    for(var i = 0; i<urlArray.length; i++){
+      console.log(urlArray[i]);
+      var s = urlArray[i].includes('333');
+      if(s){
+        console.log(i, urlArray[i]);
+        break;
+      }
+    }
   }// End `LastPage`
-  function RunSearch(url){
 
-  }
 });// End `Get Searching`
 
 module.exports = app;
