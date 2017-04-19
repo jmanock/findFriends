@@ -88,17 +88,12 @@ app.get('/searching', function(req,res){
 
   function LastPage(namesArray, urlArray){
     /*
-      ~ Maybe a while loop
-      ~ Stop once something is found?
+      ~ What am I trying to do
+        ~ Run all the links threw request
+        ~ Stop when the name is found
+        ~ Return name and link of next page
     */
-    for(var i = 0; i<urlArray.length; i++){
-      console.log(urlArray[i]);
-      var s = urlArray[i].includes('333');
-      if(s){
-        console.log(i, urlArray[i]);
-        break;
-      }
-    }
+    
   }// End `LastPage`
 
 });// End `Get Searching`
