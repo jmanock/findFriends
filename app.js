@@ -116,12 +116,8 @@ app.get('/searching', function(req,res){
     });// End `request`
   }// End `RunSearch`
   function FinalResults(name, link){
-    var finalResults = [];
-    finalResults.push({
-      name:name,
-      url:link
-    });
-    console.log(finalResults);
+
+    
   }// End `FinalResults`
 });// End `Get Searching`
 
