@@ -88,46 +88,11 @@ app.get('/searching', function(req,res){
   }// End `FindUrl`
 
   function LastPage(namesArray, urlArray){
-    for(var i = 0; i<namesArray.length && i<urlArray.length; i++){
-      var url = urlArray[i];
-      RunSearch(url);
-    }
+    console.log(urlArray.length);
   }// End `LastPage`
-  var finalResults = [];
   function RunSearch(url){
-    request(url, function(err, response, body){
-      if(!err && response.statusCode === 200){
-        //console.log(url);
-        var $ = cheerio.load(body);
-        $('a').each(function(){
-          var names = $(this).text();
-          var links = $(this).attr('href');
-          if(names === 'eVerify Full Report' || names === 'Previous page' || names === 'Next page' || names === 'Home page'){
 
-          }else{
-            names = names.slice(27).toUpperCase();
-            if(names.includes(firstName) && names.includes(lastName)){
-              /*
-                ~ Need to stop when found
-                ~ Maybe send junk somewhere else
-              */
-              finalResults.push({
-                name:names,
-                ulr:links
-              });
-            }
-          }
-        });// End `each`
-      }
-      if(finalResults.length != 0){
-        console.log('FinalResults',finalResults);
-      }
-    });// End `request`
-
-  }// End `RunSearch`
-  function FinalResults(fR){
-    //console.log(fR);
-  }// End `FinalResults`
+  }
 });// End `Get Searching`
 
 module.exports = app;
