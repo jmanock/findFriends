@@ -93,9 +93,38 @@ app.get('/searching', function(req,res){
         ~ Stop when the name is found
         ~ Return name and link of next page
     */
-    
+    for(var i = 0; i<urlArray.length; i++){
+      var url = urlArray[i];
+      something(url);
+    }
+    function something(url){
+      request(url, function(err, response, body){
+        if(!err && response.statusCode === 200){
+          ksomething(body);
+        }
+      });// End `request`
+    }// End `something`
+    function ksomething(body){
+      var xsomething = [];
+      var $ = cheerio.load(body);
+      $('a').each(function(){
+         name = $(this).text();
+         link = $(this).attr('href');
+         if(name.includes(firstName)&&name.includes(lastName)){
+           xsomething.push({
+             name:firstName+' '+lastName,
+             url:link
+           });
+         }
+      });
+      jsomething(xsomething);
+    }
   }// End `LastPage`
-
+  function jsomething(x){
+    if(x.length > 0){
+      res.send(x);
+    }
+  }
 });// End `Get Searching`
 
 module.exports = app;
